@@ -1,0 +1,15 @@
+{
+    "TransactionType": "Pay Bill",
+    "TransID": "LWR5193WSD",
+    "TransTime": "20181204191258",
+    "TransAmount": "0.03",
+    "BusinessShortCode": "999999",
+    "BillRefNumber": "SAMPLE ACCOUNT 101",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "0.03",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254000000000",
+    "FirstName": "JOHN",
+    "MiddleName": "M.",
+    "LastName": "DOE"
+}

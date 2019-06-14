@@ -1,0 +1,247 @@
+/*! =========================================================
+ *
+ Material Bootstrap Wizard - V1.0.1
+ 
+*
+* =========================================================
+*
+* MIT License Copyright 2017 Creative Tim (http://www.creative-tim.com/product/material-bootstrap-wizard)
+ *
+ *                       _oo0oo_
+ *                      o8888888o
+ *                      88" . "88
+ *                      (| -_- |)
+ *                      0\  =  /0
+ *                    ___/`---'\___
+ *                  .' \|     |// '.
+ *                 / \|||  :  |||// \
+ *                / _||||| -:- |||||- \
+ *               |   | \  -  /// |   |
+ *               | \_|  ''\---/''  |_/ |
+ *               \  .-\__  '-'  ___/-. /
+ *             ___'. .'  /--.--\  `. .'___
+ *          ."" '<  `.___\_<|>_/___.' >' "".
+ *         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+ *         \  \ `_.   \_ __\ /__ _/   .-` /  /
+ *     =====`-.____`.___ \_____/___.-`___.-'=====
+ *                       `=---='
+ *
+ *     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ *               Buddha Bless:  "No Bugs"
+ *
+ * ========================================================= */                  
+ body{
+    font-family: 'Source Sans'; 
+}
+
+
+#user{
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    background: #eee;
+    padding: 40px;
+}
+#user hr{
+    border-color: #f00 !important;
+    height: 1px;
+    max-width: 200px;
+    margin: auto;
+    background: #000 !important;
+}
+#user h1{
+    font-size: 25px;
+}
+
+.snack__content {
+    color: #fff !important;
+}
+#post #img img{
+    max-height: 300px;
+    margin: auto;
+}
+
+.input-group .input-group__details::before {
+    background-color: #e1e1e1 !important;
+    /*z-index: 1000 !important;*/
+    /*height: 2px !important;*/
+}
+.input-group--text-field label {
+    color: #696969;
+}
+
+.input-group.input-group--error .input-group__details::before {
+    background-color: #f00 !important;
+}
+
+
+.input-group__details:after {
+    background-color: #00f;
+    color: #f00;
+    top: 0;
+    height: 2px;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: center center 0;
+    transform-origin: center center 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.input-group.input-group--text-field:not(.input-group--single-line):not(.input-group--error).input-group--focused label {
+    color: #00f;
+}
+
+.input-group.input-group--error label {
+    color: #f00;
+}
+.input-group.input-group--error .input-group__messages {
+    color: #f00;
+}
+
+.application--wrap {
+    min-height: 10vh !important;
+}
+
+.btn-outline{
+    color: #000 !important;
+}
+
+
+.success, .bg-danger{
+    background: #dff0d8 !important;
+}
+
+.theme--light .navigation-drawer 
+.list__tile:not(.list__tile--active), 
+.application .theme--light.navigation-drawer 
+.list__tile:not(.list__tile--active) {
+    text-decoration: none !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+      background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 15px 0;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: all 0.3s;
+}
+
+.fade-enter-active{
+  transition: opacity 1s, transform 1s;
+}
+.fade-enter{
+  opacity: 0;
+  transform: translate(20px);
+}
+
+.has-text-danger{
+    color: #fb6b6b !important;
+}
+
+ #socialite a {
+    text-decoration: none;
+}
+
+.v-list__tile--link{
+    font-size: 15px !important;
+    text-decoration: none !important;
+}
+
+.v-datatable tr{
+    font-size: 20px !important;
+    border-bottom: #949494 1px solid !important;
+}
+.v-datatable tr:hover{
+    background-color: #eeeeee !important;
+}
+
+.v-datatable tr td{
+    border-right: #949494 1px solid !important;
+    font-size: 15px !important;
+}
+
+.v-datatable tr th{
+    font-size: 17px !important;
+}
+
+.vue-barcode-element{
+    height: 65px !important;
+    margin-top: -25px !important;
+}
+
+#navigation .v-list__tile:hover{
+    background-color: #424242 !important;
+    cursor: pointer !important;
+    color: #fff !important;
+}
+
+#navigation .v-list__tile--link, #navigation .v-list__tile{
+    border-radius: 30px;
+    margin: 8px 0 !important;
+    width: 80%;
+}
+#navigation .router-link-exact-active, #navigation .v-list__group__items .router-link-exact-active{
+    background: #fff !important;
+    color: rgba(28, 35, 90, 0.79) !important;
+    /* margin: 10px 15px 0; */
+    border-radius: 30px;
+    text-decoration: none;
+    position: relative;
+    padding: 11px 8px;
+    line-height: 20px;
+}
+#navigation .router-link-exact-active:hover{
+    background: #fff !important;
+    color: #000 !important;
+}
+#navigation .v-list__group__items .router-link-exact-active:hover{
+    background: #fff !important;
+    color: #000 !important;
+}
+
+#navigation .v-navigation-drawer{
+    width: 290px !important;
+}
+#navigation .v-list__tile__title {
+    line-height: 20px !important;
+}
+#navigation .theme--light.v-icon {
+    color: #fff !important;
+}
+.v-content{
+    background: #f8fafc !important;
+    margin-top: -100px !important;
+}
+
+#navigation .v-list__tile--link .material-icons:hover, #navigation .v-list__tile  .material-icons:hover, .fa-barcode:hover{
+    box-shadow: 0 9px 30px -6px rgba(255, 255, 255, 0.43) !important;
+    padding: 5px !important;
+    border-radius: 50% !important;
+}
+#navigation .router-link-exact-active .material-icons, .v-list__group__items .router-link-exact-active .material-icons, .fa-barcode {
+    box-shadow: 0 9px 30px -6px rgba(255, 54, 54, .5) !important;
+    padding: 5px !important;
+    border-radius: 50% !important;
+}
+/* #login .v-content{
+    background: url('storage/ps/landS.jpg') !important
+} */
+/* .link-router{
+    background: #fff !important;
+    color: rgba(28, 35, 90, 0.79) !important;
+} */
+.theme--light.v-table tbody tr {
+    /* background: linear-gradient(to bottom, rgba(52, 144, 220, 0.02), rgba(52, 144, 220, 0.12)); */
+    /* box-shadow: 0 9px 30px -6px rgba(255, 255, 255, 0.43) !important; */
+}
+.panel-header{height:260px;padding-top:80px;padding-bottom:45px;background:#141e30;background:linear-gradient(90deg,#0c2646,#204065 60%,#2a5788);position:relative;overflow:hidden}.panel-header .header .title{color:#fff}.panel-header .header .category{max-width:600px;color:hsla(0,0%,100%,.5);margin:0 auto;font-size:13px}.panel-header .header .category a{color:#fff}.panel-header-sm{height:135px}.panel-header-lg{height:380px}.card{border:0;border-radius:.1875rem;display:inline-block;position:relative;width:100%;margin-bottom:20px;box-shadow:0 1px 15px 1px rgba(39,39,39,.1)}.card .card-body{padding:15px 15px 10px}
