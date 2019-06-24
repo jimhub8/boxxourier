@@ -41,7 +41,7 @@ export default {
                 })
         },
         download() {
-            let pdfName = 'SpeedBall';
+            let pdfName = 'Boxleo';
             var doc = new jspdf();
             // doc.text(this.name, 10, 10);
             // var doc = new jspdf();
@@ -95,9 +95,9 @@ export default {
             doc.text(100, 120, 'Sender Details', null, null, 'center');
             doc.setFontSize(12)
             doc.rect(18, 125, 170, 20);
-            doc.text(20, 132, 'Sent By: SpeedBall Courier Services');
-            doc.text(120, 132, 'Phone: +25420760877');
-            doc.text(20, 139, 'Email: info@speedballcourier.com');
+            doc.text(20, 132, 'Sent By: Boxleo Courier Services');
+            doc.text(120, 132, 'Phone: +254743332743');
+            doc.text(20, 139, 'Email: info@boxleo.co.ke');
             // Client Details
             doc.rect(18, 145, 170, 10);
             doc.setFontSize(14)
@@ -135,7 +135,7 @@ export default {
 
             doc.rect(18, 230, 170, 30);
             doc.text(20, 235, 'NOTE: ');
-            doc.text(20, 240, 'Clients are requested to pay through M-PESA TILL NUMBER - 877838 ');
+            doc.text(20, 240, 'Clients are requested to pay through M-PESA TILL NUMBER - 625484 ');
             doc.text(20, 248, '(If asked to pay cash please call 0728 492 446 or 0799 869 844) ');
 
             doc.setFontSize(12)

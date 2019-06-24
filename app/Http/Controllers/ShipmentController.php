@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Branch;
+use App\Http\Resources\ShipmentResource;
 use App\Notifications\ShipmentNoty;
 use App\Product;
 use App\ScheduleLogs;
@@ -16,11 +17,17 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Notification;
-use App\Http\Resources\ShipmentResource;
+
 // use App\Observers\BaseObserver;
 
 class ShipmentController extends Controller
 {
+
+    public function invoiceOrder()
+    {
+        dd(Shipment::where('id', 1)->get());
+        return view('emails.invoice', compact('shipment'));
+    }
     public function index()
     {
         // return 'ddwdw';
@@ -232,8 +239,8 @@ class ShipmentController extends Controller
         $shipment->client_phone = $request->form['client_phone'];
         $shipment->client_email = $request->form['client_email'];
         $shipment->client_address = $request->form['client_address'];
+        $shipment->printed = 0;
         $shipment->client_city = $request->form['client_city'];
-        $shipment->airway_bill_no = $request->form['bar_code'];
         $shipment->shipment_type = $request->form['shipment_type'];
         $shipment->payment = $request->form['payment'];
         $shipment->insuarance_status = $request->form['insuarance_status'];
@@ -241,7 +248,29 @@ class ShipmentController extends Controller
         $shipment->booking_date = now();
         $shipment->derivery_date = $request->form['derivery_date'];
         $shipment->derivery_time = $request->form['derivery_time'];
-        $shipment->bar_code = $request->form['bar_code'];
+        if ($request->form['bar_code'] == '') {
+            $last_id = $this->getLastId() + 1;
+            if ($last_id <= 9) {
+                $bar_code = 'boxleo_00000' . $last_id;
+            } elseif ($last_id <= 99) {
+                $bar_code = 'boxleo_0000' . $last_id;
+            } elseif ($last_id <= 999) {
+                $bar_code = 'boxleo_000' . $last_id;
+            } elseif ($last_id <= 9999) {
+                $bar_code = 'boxleo_00' . $last_id;
+            } elseif ($last_id <= 99999) {
+                $bar_code = 'boxleo_0' . $last_id;
+            } else {
+                $bar_code = 'boxleo_' . $last_id;
+            }
+            // dd($bar_code);
+            $shipment->bar_code = $bar_code;
+            $shipment->airway_bill_no = $bar_code;
+        } else {
+            $shipment->bar_code = $request->form['bar_code'];
+            $shipment->airway_bill_no = $request->form['bar_code'];
+        }
+
         $shipment->to_city = $request->form['to_city'];
         $shipment->cod_amount = $request->form['cod_amount'];
         // $shipment->receiver_name = $request->form['receiver_name'];
@@ -269,7 +298,9 @@ class ShipmentController extends Controller
             $shipment->products()->saveMany($products);
         }
         $type = 'shipment';
-        Notification::send($users, new ShipmentNoty($shipment, $type));
+        if(Auth::user()->hasRole('Client')) {
+            Notification::send($users, new ShipmentNoty($shipment, $type));
+        }
         return $shipment;
     }
 
@@ -843,5 +874,11 @@ class ShipmentController extends Controller
             return $status;
         });
         return $statuses;
+    }
+
+    public function getLastId()
+    {
+        $shipment = Shipment::select('id')->setEagerLoads([])->orderBy('id', 'DESC')->first();
+        return $shipment->id;
     }
 }

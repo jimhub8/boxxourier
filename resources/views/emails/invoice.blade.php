@@ -83,15 +83,13 @@
 
 </head>
 
-<body>
-
-
+<body class="container">
     <div class="information">
-        <table class="table table-striped" style="width: 100%;">
+        <table class="table table-striped" style="width: 90%">
             <tr>
-                <td align="left" class="pre" style="width: 100px;">
+                <td align="left" class="pre">
                     @foreach ($shipment as $ships)
-                    <pre style="word-break: break-all;">
+                    <pre style="word-break: break-all; margin-left: 200px">
                         Bill to:  {{ $ships->client_name }}
                         Address:  {{ $ships->client_address }}
                         <br /><br />
@@ -100,12 +98,9 @@
                         Status:  {{ $ships->status }}
                     </pre> @endforeach
                 </td>
-                <td align="center" style="margin-left: -500px">
-                    <img src="{{ env('APP_URL') }}/storage/Boxleo logo_Approved-01.jpg" alt="Logo" width="80" class="logo" style="margin-top: 50px;" />
-                </td>
                 <td align="left" style="width: 30%;" class="companyInfo">
                     <pre>
-                        Box<span style="color: rgba(2, 234, 0, 0.58);">leo</span>
+                        Boxleo & Fulfillment Services | Leading Fulfillment Company in East Africa
                         <br>
                         {{ env('APP_URL') }}
                         Nairobi, Kenya
@@ -123,14 +118,15 @@
         <table width="100%" class="table table-striped table-bordered">
             <thead>
                 <tr style="border: 1px solid #f00;" <th>Product Name</th>
-                    <th>Description</th>
+                    <th>Order No</th>
                     <th>Quantity</th>
-                    <th>Quantity</th>
-                    <th>List Price</th>
+                    <th>Weight</th>
                     <th>Price</th>
                 </tr>
             </thead>
-            @foreach ($shipment as $ships) @foreach ($ships->products as $product)
+            @foreach ($shipment as $ships)
+            @if (!$ships->products->isEmpty())
+            @foreach ($ships->products as $product)
             <tbody>
                 <tr>
                     <td>{{ $product->product_name }}</td>
@@ -142,12 +138,31 @@
             <tfoot>
                 <tr>
                     <td></td>
-                    <td></td>
                     <td align="left"><b>Total</b></td>
                     <td align="right" class="gray"><b>KSH {{ $product->total }}</b></td>
                 </tr>
             </tfoot>
-            @endforeach @endforeach
+            @endforeach
+            @else
+            <tbody>
+                <tr>
+                        {{-- {{ $shipment }} --}}
+                    <td>{{ $ships->bar_code }}</td>
+                    <td>{{ $ships->weight }}</td>
+                    <td>{{ $ships->qty }}</td>
+                    <td>{{ $ships->cod_amount }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="left"><b>Total</b></td>
+                    <td align="right" class="gray"><b>KSH {{ $ships->cod_amount }}</b></td>
+                </tr>
+            </tfoot>
+            @endif
+            @endforeach
         </table>
     </div>
     <div class="line"></div>

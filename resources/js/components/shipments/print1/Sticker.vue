@@ -131,7 +131,7 @@ export default {
           doc.text(120, 90, "Name: " + element["client_name"]);
           doc.text(120, 100, "Phone Number: " + element["client_phone"]);
           doc.text(120, 110, "Client To Pay: " + element["cod_amount"]);
-          doc.text(120, 120, "Till No.: 877838");
+          doc.text(120, 120, "Till No.: 625484");
           doc.text(120, 124, "Destination:" + element["client_city"]);
           doc.text(
             120,
@@ -195,7 +195,7 @@ export default {
           doc.text(120, 230, "Name: " + element["client_name"]);
           doc.text(120, 240, "Phone Number: " + element["client_phone"]);
           doc.text(120, 250, "Client To Pay: " + element["cod_amount"]);
-          doc.text(120, 260, "Till No.: 877838");
+          doc.text(120, 260, "Till No.: 625484");
           doc.text(120, 270, "Destination:" + element["client_city"]);
           doc.text(
             120,

@@ -21,7 +21,7 @@
                             Assign Rider
                         </v-tab>
                         <v-tab-item>
-                            <UpdateShipment></UpdateShipment>
+                            <UpdateShipment :updateitedItem="updateitedItem"></UpdateShipment>
                         </v-tab-item>
                         <v-tab-item>
                             <AssignDriver :selectedItems='updateitedItem'></AssignDriver>
@@ -49,6 +49,7 @@ export default {
     data() {
         return {
             active: null,
+            updateitedItem: [],
             dialog: false,
         };
     },

@@ -91,7 +91,7 @@ export default {
       doc.setFontSize(12);
       doc.rect(18, 125, 170, 20);
       doc.text(20, 132, "Sent By: Boxleo Services");
-      doc.text(120, 132, "Phone: +25420760877");
+      doc.text(120, 132, "Phone: +254743332743");
       doc.text(20, 139, "Email:boxleo.co.ke");
       // Client Details
       doc.rect(18, 145, 170, 10);
@@ -136,7 +136,7 @@ export default {
       doc.text(
         20,
         240,
-        "Clients are requested to pay through M-PESA TILL NUMBER - 877838 "
+        "Clients are requested to pay through M-PESA TILL NUMBER - 625484 "
       );
       doc.text(
         20,

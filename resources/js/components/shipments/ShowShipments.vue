@@ -258,7 +258,7 @@
                         </v-list-tile-content>
                     </v-list-tile>
                     <v-divider></v-divider>
-                    <h4 style="text-align: justify;">Clients are requested to pay through M-PESA TILL NUMBER - <b>877838</b>
+                    <h4 style="text-align: justify;">Clients are requested to pay through M-PESA TILL NUMBER - <b>625484</b>
                         (If asked to pay cash please call <b> 0728 492 446 </b> or <b> 0799 869 844</b>) </h4>
                    <br><br><br>
                     <b style="float: left;">Authorizer Signature____________________________</b>

@@ -38,7 +38,7 @@
                                                 Phone:
                                             </v-list-tile-action>
                                             <v-list-tile-content>
-                                                <v-list-tile-title>+25420760877</v-list-tile-title>
+                                                <v-list-tile-title>+254743332743</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                         <v-list-tile>
@@ -76,7 +76,7 @@
                                                 {{ showItems.bar_code }}
                                             </v-list-tile-title>
                                         </v-list-tile-content>
-                                    </v-list-tile> --> 
+                                    </v-list-tile> -->
                                 </v-card-title>
                                 <v-card-actions>
                                     <v-list-tile>
@@ -126,7 +126,7 @@
                                                 <b>Phone</b>
                                             </v-list-tile-action>
                                             <v-list-tile-content>
-                                                <v-list-tile-title>+25420760877</v-list-tile-title>
+                                                <v-list-tile-title>+254743332743</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                         <v-list-tile>

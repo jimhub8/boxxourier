@@ -18,7 +18,7 @@
                     <v-list-tile-avatar>
                         <avatar :username="user.name" style="font-size: 20px;margin: auto;padding: 0px;"></avatar>
                         <!-- <img :src="user.profile" alt="John"> -->
-                    </v-list-tile-avatar> 
+                    </v-list-tile-avatar>
 
                         <v-list-tile-content>
                             <v-list-tile-title>{{ user.name }}</v-list-tile-title>
@@ -67,15 +67,15 @@
             </v-card-actions>
         </v-card>
     </v-menu>
-    <NotyShipment @closeRequest="close" :shipment="seeShipment" :openRequest="notyShow" :user="user"></NotyShipment>
+    <NotyShipment></NotyShipment>
 </div>
 </template>
 
 <script>
-let NotyShipment = require("./NotyShipment");
+import NotyShipment from "./NotyShipment";
 import Avatar from "vue-avatar";
 export default {
-  props: ["user"],
+  props: ["user"],  
   components: {
     NotyShipment,
     Avatar
@@ -94,11 +94,7 @@ export default {
       // console.log(item)
       // this.editedIndex = this.notifications.indexOf(item)
       // this.seeShipment = item
-      axios.post(`/Notyshpments/${item}`).then(response => {
-        console.log(response.data);
-        this.seeShipment = response.data;
-      });
-      this.notyShow = true;
+      eventBus.$emit('notyOpenEvent', item)
     },
     read() {
       axios.post("/read").then(response => {

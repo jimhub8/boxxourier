@@ -262,7 +262,7 @@ export default {
                 price: 0,
             }],
             // sender_name: 'SpeedBall courier services',
-            // sender_email: 'info@speedballcourier.com',
+            // sender_email: 'info@boxleocourier.com',
             // sender_phone: '+254728492446',
             // sender_address: '636400100',
             // sender_city: 'Embakasi, Nairobi',

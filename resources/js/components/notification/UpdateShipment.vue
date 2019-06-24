@@ -62,6 +62,7 @@
 
 <script>
 export default {
+    props: ['updateitedItem'],
     data() {
         return {
             loading: false,
@@ -86,7 +87,7 @@ export default {
                     this.loading = false;
                     this.alert();
                     this.close();
-                    eventBus.$emit("refreshShipEvent")
+                    eventBus.$emit("alertRequest", 'status updated')
                     this.updateitedItem.derivery_date = "";
                 })
                 .catch(error => {

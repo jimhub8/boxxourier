@@ -184,7 +184,7 @@
             <!-- Data table -->
         </v-container>
     </v-content>
-    <CreateShipment :addShipment="dialog" @closeRequest="close" @alertRequest="showalert" :Allcustomer="Allcustomers" :user="user" :role="role" :AllBranches="AllBranches" :AllDrivers="AllDrivers"></CreateShipment>
+    <CreateShipment :last_id='last_id' :statuses="statuses" :addShipment="dialog" @closeRequest="close" @alertRequest="showalert" :Allcustomer="Allcustomers" :user="user" :role="role" :AllBranches="AllBranches" :AllDrivers="AllDrivers"></CreateShipment>
     <EditShipment :EditShipment="dialog1" @closeRequest="close" @alertRequest="showalert" :Allcustomer="Allcustomers" :user="user" :role="role" :AllBranches="AllBranches" :AllDrivers="AllDrivers" :form="editedItem"></EditShipment>
     <ShowShipment :element="element" @closeRequest="close" :customers="Allcustomers" :showItems="showItem"></ShowShipment>
     <!-- <TzShipment></TzShipment>
@@ -197,7 +197,7 @@
     <TrackShipment @refreshRequest="sortItem" :shipments="updateitedItem" :OpenTrackBranch="trackModel" @alertRequest="showalert" @closeRequest="close" :updateitedItem="editedItem" :selectedItems="selected" :user="user"></TrackShipment>
     <myCsvFile :OpenCsv="csvModel" @closeRequest="close"></myCsvFile>
     <mySCharges :mySCharges="chargeModal" @closeRequest="close" :updateCharges="shipment" @alertRequest="distAlert"></mySCharges>
-    <myRows :myRows="RowModal" @closeRequest="close" :updateCharges="shipment"></myRows>
+    <!-- <myRows :myRows="RowModal" @closeRequest="close" :updateCharges="shipment"></myRows> -->
     <!-- <myPrintPod :PrintRequest="printModal" @closeRequest="close" :selected="selected"></myPrintPod> -->
     <v-snackbar :timeout="timeout" bottom="bottom" :color="color" left="left" v-model="snackbar">
         {{ message }}
@@ -225,758 +225,794 @@ import mySCharges from "./Charge";
 // import myRows from "./rows/Rows";
 // import myPrintSPdf from './PrintSPdf.js';
 export default {
-  props: ["user", "role"],
-  components: {
-    // myRows,
-    CreateShipment,
-    ShowShipment,
-    EditShipment,
-    barcode: VueBarcode,
-    UpdateShipmentStatus,
-    UpdateShipment,
-    AssignDriver,
-    AssignBranch,
-    TrackShipment,
-    myCsvFile,
-    mySCharges,
-    // TzShipment,
-    // UgPrintSpdf,
-    // RwPrintSpdf
-    // myPrintSPdf,
-    // myPrintPod
-  },
-  data() {
-    return {
-      RowModal: false,
-      csvModel: false,
-      trackModel: false,
-      chargeModal: false,
-      printColor: "",
-      printModal: false,
-      ploading: false,
-      nloading: false,
-      mloading: false,
-      timer: "",
-      AllBranches: [],
-      AllCountries: [],
-      AllDrivers: [],
-      element: [],
-      glsearch: {
-        search: ""
-      },
-      selectCountry: {
-        country_id: "All",
-        id: "all"
-      },
-      select: {
-        branch_name: "All",
-        id: "all"
-      },
-      selectItem: {
-        name: "All"
-      },
-      json_fields: {
-        "Order Id": "order_id",
-        "Sender Name": "sender_name",
-        "Sender Email": "sender_email",
-        "Sender Phone": "sender_phone",
-        "Sender City": "sender_city",
-        "Sender Address": "sender_address",
-        Driver: "driver",
-        "Client Name": "client_name",
-        "Client Email": "client_email",
-        "Client Phone": "client_phone",
-        "Client City": "client_city",
-        "Client Address": "client_address",
-        "Derivery Status": "status",
-        From: "sender_address",
-        To: "client_address",
-        "Derivery Date": "derivery_date",
-        "Derivery Time": "derivery_time",
-        Quantity: "amount_ordered",
-        "COD Amount": "cod_amount",
-        "Booking Date": "booking_date",
-        "Special Instructions": "speciial_instruction"
-      },
-      snackbar: false,
-      timeout: 5000,
-      message: "Success",
-      color: "black",
-      loader: false,
-      updateModal: false,
-      AssignBranchModel: false,
-      UpdateShipmentModel: false,
-      showdialog1: false,
-      AllShipments: [],
-      search: "",
-      temp: "",
-      dialog: false,
-      loading: false,
-      dialog1: false,
-      pdialog2: false,
-      AssignDriverModel: false,
-      updateitedItem: {},
-      AllProducts: {},
-      newProducts: {},
-      coordinatesArr: [],
-      showItem: {},
-      editedItem: {},
-      between: {
-        start: 1,
-        end: 500
-      },
-      form: {
-        start_date: "",
-        end_date: ""
-      },
-      headers: [
-        {
-          text: "Waybill Date",
-          value: "created_at"
+    props: ["user", "role"],
+    components: {
+        // myRows,
+        CreateShipment,
+        ShowShipment,
+        EditShipment,
+        barcode: VueBarcode,
+        UpdateShipmentStatus,
+        UpdateShipment,
+        AssignDriver,
+        AssignBranch,
+        TrackShipment,
+        myCsvFile,
+        mySCharges,
+        // TzShipment,
+        // UgPrintSpdf,
+        // RwPrintSpdf
+        // myPrintSPdf,
+        // myPrintPod
+    },
+    data() {
+        return {
+            last_id: null,
+            RowModal: false,
+            csvModel: false,
+            trackModel: false,
+            chargeModal: false,
+            printColor: "",
+            printModal: false,
+            ploading: false,
+            nloading: false,
+            mloading: false,
+            timer: "",
+            AllBranches: [],
+            AllCountries: [],
+            statuses: [],
+            AllDrivers: [],
+            element: [],
+            glsearch: {
+                search: ""
+            },
+            selectCountry: {
+                country_id: "All",
+                id: "all"
+            },
+            select: {
+                branch_name: "All",
+                id: "all"
+            },
+            selectItem: {
+                name: "All"
+            },
+            json_fields: {
+                "Order Id": "order_id",
+                "Sender Name": "sender_name",
+                "Sender Email": "sender_email",
+                "Sender Phone": "sender_phone",
+                "Sender City": "sender_city",
+                "Sender Address": "sender_address",
+                Driver: "driver",
+                "Client Name": "client_name",
+                "Client Email": "client_email",
+                "Client Phone": "client_phone",
+                "Client City": "client_city",
+                "Client Address": "client_address",
+                "Derivery Status": "status",
+                From: "sender_address",
+                To: "client_address",
+                "Derivery Date": "derivery_date",
+                "Derivery Time": "derivery_time",
+                Quantity: "amount_ordered",
+                "COD Amount": "cod_amount",
+                "Booking Date": "booking_date",
+                "Special Instructions": "speciial_instruction"
+            },
+            snackbar: false,
+            timeout: 5000,
+            message: "Success",
+            color: "black",
+            loader: false,
+            updateModal: false,
+            AssignBranchModel: false,
+            UpdateShipmentModel: false,
+            showdialog1: false,
+            AllShipments: [],
+            search: "",
+            temp: "",
+            dialog: false,
+            loading: false,
+            dialog1: false,
+            pdialog2: false,
+            AssignDriverModel: false,
+            updateitedItem: {},
+            AllProducts: {},
+            newProducts: {},
+            coordinatesArr: [],
+            showItem: {},
+            editedItem: {},
+            between: {
+                start: 1,
+                end: 500
+            },
+            form: {
+                start_date: "",
+                end_date: ""
+            },
+            headers: [{
+                    text: "Waybill Date",
+                    value: "created_at"
+                },
+                {
+                    text: "Waybill Number",
+                    value: "bar_code"
+                },
+                {
+                    text: "Client",
+                    value: "client_name"
+                },
+                {
+                    text: "Client Phone",
+                    value: "client_phone"
+                },
+                {
+                    text: "Client Email",
+                    value: "client_email"
+                },
+                {
+                    text: "Client Address",
+                    value: "client_address"
+                },
+                {
+                    text: "Client City",
+                    value: "client_city"
+                },
+                {
+                    text: "Qty&COD",
+                    value: "amount_ordered"
+                },
+                {
+                    text: "Status",
+                    value: "status"
+                },
+                {
+                    text: "Delivery Date",
+                    value: "derivery_date"
+                },
+                {
+                    text: "Receipt",
+                    value: "printReceipt"
+                },
+                {
+                    text: "Actions",
+                    sortable: false
+                }
+            ],
+            selected: [],
+            AllRows: [],
+            selectStatus: [],
+            direction: "left",
+            Allcustomers: [],
+            shipment: {},
+            markers: [],
+            AllStatus: [],
+            shipmentsCount: null
+        };
+    },
+    methods: {
+        UpdateStatus() {
+            // alert(this.updateitedItem.id);
+            axios
+                .post(`/updateStatus/${this.updateitedItem.id}`, {
+                    formobg: this.$data.updateitedItem,
+                    address: this.$data.address
+                })
+                .then(response => {
+                    this.resetForm();
+                    // console.log(response);
+                    this.message = "Updated";
+                    this.color = "black";
+                    this.snackbar = true;
+                    // this.markers.push(response.data);
+                });
         },
-        {
-          text: "Waybill Number",
-          value: "bar_code"
+        resetForm() {
+            this.form = Object.assign({}, this.defaultForm);
+            this.$refs.form.reset();
         },
-        {
-          text: "Client",
-          value: "client_name"
+        openShipment() {
+            this.dialog = true;
+            this.getBranch();
+            this.getLastId()
+            this.getStatus()
+            this.getCustomer();
+            this.getDrivers();
         },
-        {
-          text: "Client Phone",
-          value: "client_phone"
+        // addProduct() {
+        //   // alert(this.updateitedItem.id);
+        //   axios
+        //     .post(`/productAdd/${this.updateitedItem.id}`, this.$data.form)
+        //     .then(response => {
+        //       // console.log(response.data);
+        //       this.message = "Product Added";
+        //       this.color = "black";
+        //       this.snackbar = true;
+        //       this.resetForm();
+        //       this.AllProducts.push(response.data);
+        //       this.pdialog2 = false;
+        //     });
+        // },
+        // editShipment(key) {
+        //   // alert(key);
+        //   this.$children[2].list = this.AllShipments[key];
+        //   this.dialog1 = true;
+        // },
+        openProduct(updateitedItem) {
+            this.pdialog2 = true;
         },
-        {
-          text: "Client Email",
-          value: "client_email"
+        UpdateItems(item) {
+            axios
+                .post(`/getcoordinatesArray/${item.id}`)
+                .then(response => (this.markers = response.data))
+                .catch(error => (this.errors = error.response.data.errors));
+            console.log(this.coordinatesArr);
+            this.updateitedItem = Object.assign({}, item);
+            this.updatedIndex = this.AllShipments.indexOf(item);
+            this.updateModal = true;
         },
-        {
-          text: "Client Address",
-          value: "client_address"
+        editItem(item) {
+            this.editedItem = Object.assign({}, item);
+            this.editedIndex = this.AllShipments.indexOf(item);
+            // console.log(this.editedItem);
+            this.dialog1 = true;
+            this.getBranch();
+            this.getCustomer();
+            this.getDrivers();
         },
-        {
-          text: "Client City",
-          value: "client_city"
+        showDetails(item) {
+            eventBus.$emit("printEvent", item);
         },
-        {
-          text: "Qty&COD",
-          value: "amount_ordered"
+        TzshowDetails(item) {
+            eventBus.$emit("TzprintEvent", item);
         },
-        {
-          text: "Status",
-          value: "status"
+        UgshowDetails(item) {
+            eventBus.$emit("UgprintEvent", item);
         },
-        {
-          text: "Delivery Date",
-          value: "derivery_date"
+        RwshowDetails(item) {
+            eventBus.$emit("RwprintEvent", item);
         },
-        {
-          text: "Receipt",
-          value: "printReceipt"
+        ShipmentTrack(item) {
+            this.updateitedItem = Object.assign({}, item);
+            this.editedIndex = this.AllShipments.indexOf(item);
+            this.trackModel = true;
+            eventBus.$emit("TrackShipEvent", item);
         },
-        {
-          text: "Actions",
-          sortable: false
+        Shipcharges(item) {
+            this.shipment = Object.assign({}, item);
+            this.editedIndex = this.AllShipments.indexOf(item);
+            this.chargeModal = true;
+        },
+        openRow() {
+            this.RowModal = true;
+        },
+        ShipmentCsv() {
+            this.csvModel = true;
+            this.getCustomer();
+        },
+        deleteItem(item) {
+            const index = this.AllShipments.indexOf(item);
+            if (confirm("Are you sure you want to delete this item?")) {
+                axios
+                    .delete(`/shipment/${item.id}`)
+                    .then(response => {
+                        this.message = "Deleted";
+                        this.color = "black";
+                        this.snackbar = true;
+                        this.AllShipments.splice(index, 1);
+                        // console.log(response);
+                    })
+                    .catch(error => (this.errors = error.response.data.errors));
+            }
+        },
+        notPrinted(item) {
+            this.editedItem = Object.assign({}, item);
+            this.editedIndex = this.AllShipments.indexOf(item);
+            (this.loading = true),
+            axios
+                .post(`/notprinted/${item.id}`)
+                .then(response => {
+                    // this.printColor = 'red'
+                    // this.loading = false,
+                    this.sortItem();
+                    this.message = "Not Printed";
+                    this.color = "black";
+                    this.snackbar = true;
+                    // Object.assign(this.AllShipments[this.editedIndex], this.editedItem)
+                    // console.log(response);
+                })
+                .catch(error => (this.errors = error.response.data.errors));
+        },
+        printed(item) {
+            this.editedItem = Object.assign({}, item);
+            this.editedIndex = this.AllShipments.indexOf(item);
+            (this.loading = true),
+            axios
+                .post(`/printed/${item.id}`)
+                .then(response => {
+                    // this.printColor = 'green'
+                    this.sortItem();
+                    // this.loading = false,
+                    this.message = "Printed";
+                    this.color = "black";
+                    this.snackbar = true;
+                    // Object.assign(this.AllShipments[this.editedIndex], this.editedItem)
+                    // console.log(response);
+                })
+                .catch(error => (this.errors = error.response.data.errors));
+        },
+        pending(item) {
+            this.editedItem = Object.assign({}, item);
+            this.editedIndex = this.AllShipments.indexOf(item);
+            (this.mloading = true),
+            axios
+                .post(`/pending/${item.id}`)
+                .then(response => {
+                    // this.printColor = 'blue'
+                    (this.mloading = false), (this.message = "Pending");
+                    this.color = "black";
+                    this.snackbar = true;
+                    Object.assign(this.AllShipments[this.editedIndex], this.editedItem);
+                    // console.log(response);
+                })
+                .catch(error => (this.errors = error.response.data.errors));
+        },
+        UpdateShipmentStatus(item) {
+            if (this.selected.length < 1) {
+                this.message = "please select a shipment";
+                this.color = "red";
+                this.snackbar = true;
+            } else {
+                this.UpdateShipmentModel = true;
+            }
+        },
+        assignDriver() {
+            if (this.selected.length < 1) {
+                this.message = "please select a shipment";
+                this.color = "red";
+                this.snackbar = true;
+            } else {
+                this.AssignDriverModel = true;
+                this.getDrivers();
+            }
+        },
+        assignBranch() {
+            if (this.selected.length < 1) {
+                this.message = "please select a shipment";
+                this.color = "red";
+                this.snackbar = true;
+            } else {
+                this.AssignBranchModel = true;
+                this.getBranch();
+            }
+        },
+        assignPrint() {
+            if (this.selected.length < 1) {
+                this.message = "please select a shipment";
+                this.color = "red";
+                this.snackbar = true;
+            } else {
+                this.printModal = true;
+            }
+        },
+        getTotal() {
+            this.gettotlaAmount = true;
+            if (this.form.quantity && this.form.price) {
+                this.form.total = this.form.quantity * this.form.price;
+            } else {
+                this.form.total = 0;
+            }
+        },
+        showalert() {
+            this.message = "success";
+            this.color = "indigo";
+            this.snackbar = true;
+        },
+
+        distAlert(data) {
+            this.snackbar = true;
+            this.message = "Distance:" + data.dist;
+            this.color = "indigo";
+        },
+        sortItem() {
+            this.loading = true;
+            axios
+                .post("/filterShipment", {
+                    select: this.select,
+                    no_btw: this.between,
+                    selectStatus: this.selectItem,
+                    form: this.form,
+                    selectCountry: this.selectCountry
+                })
+                .then(response => {
+                    this.loading = false;
+                    this.AllShipments = response.data;
+                    this.filterCount();
+                })
+                .catch(error => {
+                    this.loading = false;
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        next() {
+            this.loading = true;
+            this.between.start = parseInt(this.between.start) + 500;
+            this.between.end = parseInt(this.between.end) + 500;
+            this.sortItem();
+        },
+        previous() {
+            this.loading = true;
+            if (this.between.start >= 500) {
+                this.between.start = parseInt(this.between.start) - 500;
+                this.between.end = parseInt(this.between.end) - 500;
+                this.sortItem();
+            } else {
+                return;
+                this.loading = false;
+            }
+        },
+        currentPage() {
+            this.loading = true;
+            axios
+                .post("/btwRefShipments", this.$data.between)
+                .then(response => {
+                    this.loading = false;
+                    this.AllShipments = response.data;
+                })
+                .catch(error => {
+                    this.loading = false;
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+
+        close() {
+            this.dialog1 = this.dialog = this.pdialog2 = this.updateModal = this.showdialog1 = this.UpdateShipmentModel = this.AssignDriverModel = this.AssignBranchModel = this.trackModel = this.csvModel = this.chargeModal = this.RowModal = this.printModal = false;
+        },
+        filReset() {
+            this.selectAss = {
+                Assigned: "All"
+            };
+            this.selectItem = {
+                name: "All"
+            };
+            this.selectCountry = {
+                country_id: "All",
+                id: "all"
+            };
+            this.getBranch();
+            this.form.start_date = this.form.end_date = "";
+            this.sortItem();
+        },
+
+        getCustomer() {
+            axios
+                .get("/getCustomer")
+                .then(response => {
+                    this.Allcustomers = response.data;
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
+        },
+        getDrivers() {
+            axios
+                .get("/getDrivers")
+                .then(response => {
+                    this.AllDrivers = response.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        getBranch() {
+            axios
+                .get("/getBranchEger")
+                .then(response => {
+                    this.AllBranches = response.data;
+                    this.select = {
+                        branch_name: "All",
+                        id: "all"
+                    };
+                })
+                .catch(error => {
+                    console.log(error);
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        currentSTPage() {
+            this.loading = true;
+            axios
+                .post("/btwSTdate", {
+                    date_btw: this.$data.between,
+                    filter_btw: this.form
+                })
+                .then(response => {
+                    this.loading = false;
+                    this.AllShipments = response.data;
+                })
+                .catch(error => {
+                    this.loading = false;
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        cancelAutoUpdate() {
+            clearInterval(this.timer);
+        },
+        itemSearch() {
+            this.loading = true;
+            axios
+                .post("/glSearch", this.glsearch)
+                .then(response => {
+                    this.loading = false;
+                    this.AllShipments = response.data;
+                })
+                .catch(error => {
+                    this.loading = false;
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        filterCount() {
+            axios
+                .post("/filterCount", {
+                    select: this.select,
+                    no_btw: this.between,
+                    selectStatus: this.selectItem,
+                    form: this.form,
+                    selectCountry: this.selectCountry
+                })
+                .then(response => {
+                    this.shipmentsCount = response.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        eventBus.$emit("errorEvent", error.response.statusText);
+                        return;
+                    } else if (
+                        error.response.status === 401 ||
+                        error.response.status === 409
+                    ) {
+                        eventBus.$emit("reloadRequest", error.response.statusText);
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        changeCat(item) {
+            this.select = {
+                branch_name: "All",
+                id: "all"
+            };
+            this.AllBranches = item.branches;
+        },
+        getStatus() {
+
+            axios
+                .get("/getStatuses")
+                .then(response => {
+                    this.statuses = response.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        eventBus.$emit('errorEvent', error.response.statusText)
+                        return
+                    } else if (error.response.status === 401 || error.response.status === 409) {
+                        eventBus.$emit('reloadRequest', error.response.statusText)
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        getLastId() {
+            axios
+                .get("/getLastId")
+                .then(response => {
+                    this.last_id = response.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        eventBus.$emit('errorEvent', error.response.statusText)
+                        return
+                    } else if (error.response.status === 401 || error.response.status === 409) {
+                        eventBus.$emit('reloadRequest', error.response.statusText)
+                    }
+                    this.errors = error.response.data.errors;
+                });
         }
-      ],
-      selected: [],
-      AllRows: [],
-      selectStatus: [],
-      direction: "left",
-      Allcustomers: [],
-      shipment: {},
-      markers: [],
-      AllStatus: [],
-      shipmentsCount: null
-    };
-  },
-  methods: {
-    UpdateStatus() {
-      // alert(this.updateitedItem.id);
-      axios
-        .post(`/updateStatus/${this.updateitedItem.id}`, {
-          formobg: this.$data.updateitedItem,
-          address: this.$data.address
-        })
-        .then(response => {
-          this.resetForm();
-          // console.log(response);
-          this.message = "Updated";
-          this.color = "black";
-          this.snackbar = true;
-          // this.markers.push(response.data);
+    },
+    created() {
+        eventBus.$on("selectClear", data => {
+            this.selected = [];
+        });
+
+        eventBus.$on("refreshShipEvent", data => {
+            this.sortItem();
+        });
+        eventBus.$on("TrackEvent", data => {
+            this.updateModal = true;
+        });
+
+        eventBus.$on("distanceEvent", data => {
+            this.distAlert(data);
         });
     },
-    resetForm() {
-      this.form = Object.assign({}, this.defaultForm);
-      this.$refs.form.reset();
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
-    openShipment() {
-      this.dialog = true;
-      this.getBranch();
-      this.getCustomer();
-      this.getDrivers();
-    },
-    addProduct() {
-      // alert(this.updateitedItem.id);
-      axios
-        .post(`/productAdd/${this.updateitedItem.id}`, this.$data.form)
-        .then(response => {
-          // console.log(response.data);
-          this.message = "Product Added";
-          this.color = "black";
-          this.snackbar = true;
-          this.resetForm();
-          this.AllProducts.push(response.data);
-          this.pdialog2 = false;
-        });
-    },
-    // editShipment(key) {
-    //   // alert(key);
-    //   this.$children[2].list = this.AllShipments[key];
-    //   this.dialog1 = true;
-    // },
-    openProduct(updateitedItem) {
-      this.pdialog2 = true;
-    },
-    UpdateItems(item) {
-      axios
-        .post(`/getcoordinatesArray/${item.id}`)
-        .then(response => (this.markers = response.data))
-        .catch(error => (this.errors = error.response.data.errors));
-      console.log(this.coordinatesArr);
-      this.updateitedItem = Object.assign({}, item);
-      this.updatedIndex = this.AllShipments.indexOf(item);
-      this.updateModal = true;
-    },
-    editItem(item) {
-      this.editedItem = Object.assign({}, item);
-      this.editedIndex = this.AllShipments.indexOf(item);
-      // console.log(this.editedItem);
-      this.dialog1 = true;
-      this.getBranch();
-      this.getCustomer();
-      this.getDrivers();
-    },
-    showDetails(item) {
-      eventBus.$emit("printEvent", item);
-    },
-    TzshowDetails(item) {
-      eventBus.$emit("TzprintEvent", item);
-    },
-    UgshowDetails(item) {
-      eventBus.$emit("UgprintEvent", item);
-    },
-    RwshowDetails(item) {
-      eventBus.$emit("RwprintEvent", item);
-    },
-    ShipmentTrack(item) {
-      this.updateitedItem = Object.assign({}, item);
-      this.editedIndex = this.AllShipments.indexOf(item);
-      this.trackModel = true;
-      eventBus.$emit("TrackShipEvent", item);
-    },
-    Shipcharges(item) {
-      this.shipment = Object.assign({}, item);
-      this.editedIndex = this.AllShipments.indexOf(item);
-      this.chargeModal = true;
-    },
-    openRow() {
-      this.RowModal = true;
-    },
-    ShipmentCsv() {
-      this.csvModel = true;
-      this.getCustomer();
-    },
-    deleteItem(item) {
-      const index = this.AllShipments.indexOf(item);
-      if (confirm("Are you sure you want to delete this item?")) {
-        axios
-          .delete(`/shipment/${item.id}`)
-          .then(response => {
-            this.message = "Deleted";
-            this.color = "black";
-            this.snackbar = true;
-            this.AllShipments.splice(index, 1);
-            // console.log(response);
-          })
-          .catch(error => (this.errors = error.response.data.errors));
-      }
-    },
-    notPrinted(item) {
-      this.editedItem = Object.assign({}, item);
-      this.editedIndex = this.AllShipments.indexOf(item);
-      (this.loading = true),
-        axios
-          .post(`/notprinted/${item.id}`)
-          .then(response => {
-            // this.printColor = 'red'
-            // this.loading = false,
-            this.sortItem();
-            this.message = "Not Printed";
-            this.color = "black";
-            this.snackbar = true;
-            // Object.assign(this.AllShipments[this.editedIndex], this.editedItem)
-            // console.log(response);
-          })
-          .catch(error => (this.errors = error.response.data.errors));
-    },
-    printed(item) {
-      this.editedItem = Object.assign({}, item);
-      this.editedIndex = this.AllShipments.indexOf(item);
-      (this.loading = true),
-        axios
-          .post(`/printed/${item.id}`)
-          .then(response => {
-            // this.printColor = 'green'
-            this.sortItem();
-            // this.loading = false,
-            this.message = "Printed";
-            this.color = "black";
-            this.snackbar = true;
-            // Object.assign(this.AllShipments[this.editedIndex], this.editedItem)
-            // console.log(response);
-          })
-          .catch(error => (this.errors = error.response.data.errors));
-    },
-    pending(item) {
-      this.editedItem = Object.assign({}, item);
-      this.editedIndex = this.AllShipments.indexOf(item);
-      (this.mloading = true),
-        axios
-          .post(`/pending/${item.id}`)
-          .then(response => {
-            // this.printColor = 'blue'
-            (this.mloading = false), (this.message = "Pending");
-            this.color = "black";
-            this.snackbar = true;
-            Object.assign(this.AllShipments[this.editedIndex], this.editedItem);
-            // console.log(response);
-          })
-          .catch(error => (this.errors = error.response.data.errors));
-    },
-    UpdateShipmentStatus(item) {
-      if (this.selected.length < 1) {
-        this.message = "please select a shipment";
-        this.color = "red";
-        this.snackbar = true;
-      } else {
-        this.UpdateShipmentModel = true;
-      }
-    },
-    assignDriver() {
-      if (this.selected.length < 1) {
-        this.message = "please select a shipment";
-        this.color = "red";
-        this.snackbar = true;
-      } else {
-        this.AssignDriverModel = true;
-        this.getDrivers();
-      }
-    },
-    assignBranch() {
-      if (this.selected.length < 1) {
-        this.message = "please select a shipment";
-        this.color = "red";
-        this.snackbar = true;
-      } else {
-        this.AssignBranchModel = true;
+    mounted() {
+        this.loader = true;
         this.getBranch();
-      }
-    },
-    assignPrint() {
-      if (this.selected.length < 1) {
-        this.message = "please select a shipment";
-        this.color = "red";
-        this.snackbar = true;
-      } else {
-        this.printModal = true;
-      }
-    },
-    getTotal() {
-      this.gettotlaAmount = true;
-      if (this.form.quantity && this.form.price) {
-        this.form.total = this.form.quantity * this.form.price;
-      } else {
-        this.form.total = 0;
-      }
-    },
-    showalert() {
-      this.message = "success";
-      this.color = "indigo";
-      this.snackbar = true;
-    },
+        this.filterCount();
+        axios
+            .get("/getCountry")
+            .then(response => {
+                this.AllCountries = response.data;
+                this.loader = false;
+            })
+            .catch(error => {
+                this.loader = false;
+                if (error.response.status === 500) {
+                    eventBus.$emit("errorEvent", error.response.statusText);
+                    return;
+                } else if (
+                    error.response.status === 401 ||
+                    error.response.status === 409
+                ) {
+                    eventBus.$emit("reloadRequest", error.response.statusText);
+                }
+                this.errors = error.response.data.errors;
+            });
 
-    distAlert(data) {
-      this.snackbar = true;
-      this.message = "Distance:" + data.dist;
-      this.color = "indigo";
-    },
-    sortItem() {
-      this.loading = true;
-      axios
-        .post("/filterShipment", {
-          select: this.select,
-          no_btw: this.between,
-          selectStatus: this.selectItem,
-          form: this.form,
-          selectCountry: this.selectCountry
-        })
-        .then(response => {
-          this.loading = false;
-          this.AllShipments = response.data;
-          this.filterCount();
-        })
-        .catch(error => {
-          this.loading = false;
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
-    next() {
-      this.loading = true;
-      this.between.start = parseInt(this.between.start) + 500;
-      this.between.end = parseInt(this.between.end) + 500;
-      this.sortItem();
-    },
-    previous() {
-      this.loading = true;
-      if (this.between.start >= 500) {
-        this.between.start = parseInt(this.between.start) - 500;
-        this.between.end = parseInt(this.between.end) - 500;
+        axios
+            .get("/getShipmentsCount")
+            .then(response => {
+                this.shipmentsCount = response.data;
+            })
+            .catch(error => {
+                if (error.response.status === 500) {
+                    eventBus.$emit("errorEvent", error.response.statusText);
+                    return;
+                } else if (
+                    error.response.status === 401 ||
+                    error.response.status === 409
+                ) {
+                    eventBus.$emit("reloadRequest", error.response.statusText);
+                }
+                this.errors = error.response.data.errors;
+            });
+        axios
+            .get("/getStatuses")
+            .then(response => {
+                this.AllStatus = response.data;
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors;
+            });
+
+        axios
+            .get("/updateCancelled")
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                if (error.response.status === 500) {
+                    eventBus.$emit("errorEvent", error.response.statusText);
+                    return;
+                } else if (
+                    error.response.status === 401 ||
+                    error.response.status === 409
+                ) {
+                    eventBus.$emit("reloadRequest", error.response.statusText);
+                }
+                this.errors = error.response.data.errors;
+            });
+
         this.sortItem();
-      } else {
-        return;
-        this.loading = false;
-      }
     },
-    currentPage() {
-      this.loading = true;
-      axios
-        .post("/btwRefShipments", this.$data.between)
-        .then(response => {
-          this.loading = false;
-          this.AllShipments = response.data;
-        })
-        .catch(error => {
-          this.loading = false;
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
+    // computed: {
+    //     resetFilter() {
+    //         if(this.between.start < this.shipmentsCount) {
+    //             this.between.start = 1
+    //             this.between.end = 500
+    //             this.sortItem()
+    //         }
+    //     }
+    // },
+    // watch: {
+    //     checked() {
+    //         let period = this.between.start
+    //         let countS = this.shipmentsCount
 
-    close() {
-      this.dialog1 = this.dialog = this.pdialog2 = this.updateModal = this.showdialog1 = this.UpdateShipmentModel = this.AssignDriverModel = this.AssignBranchModel = this.trackModel = this.csvModel = this.chargeModal = this.RowModal = this.printModal = false;
-    },
-    filReset() {
-      this.selectAss = {
-        Assigned: "All"
-      };
-      this.selectItem = {
-        name: "All"
-      };
-      this.selectCountry = {
-        country_id: "All",
-        id: "all"
-      };
-      this.getBranch();
-      this.form.start_date = this.form.end_date = "";
-      this.sortItem();
-    },
+    //         if ((period > countS)) {
+    //             // this.sortItem()
+    //             alert('oppps')
+    //         } else {
+    //             alert('oqqqs')
+    //             // this.filterCount()
+    //         }
 
-    getCustomer() {
-      axios
-        .get("/getCustomer")
-        .then(response => {
-          this.Allcustomers = response.data;
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors;
+    //     }
+    // },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            if (vm.user.can["view shipments"]) {
+                next();
+            } else {
+                next("/unauthorized");
+            }
         });
-    },
-    getDrivers() {
-      axios
-        .get("/getDrivers")
-        .then(response => {
-          this.AllDrivers = response.data;
-        })
-        .catch(error => {
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
-    getBranch() {
-      axios
-        .get("/getBranchEger")
-        .then(response => {
-          this.AllBranches = response.data;
-          this.select = {
-            branch_name: "All",
-            id: "all"
-          };
-        })
-        .catch(error => {
-          console.log(error);
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
-    currentSTPage() {
-      this.loading = true;
-      axios
-        .post("/btwSTdate", {
-          date_btw: this.$data.between,
-          filter_btw: this.form
-        })
-        .then(response => {
-          this.loading = false;
-          this.AllShipments = response.data;
-        })
-        .catch(error => {
-          this.loading = false;
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
-    cancelAutoUpdate() {
-      clearInterval(this.timer);
-    },
-    itemSearch() {
-      this.loading = true;
-      axios
-        .post("/glSearch", this.glsearch)
-        .then(response => {
-          this.loading = false;
-          this.AllShipments = response.data;
-        })
-        .catch(error => {
-          this.loading = false;
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
-    filterCount() {
-      axios
-        .post("/filterCount", {
-          select: this.select,
-          no_btw: this.between,
-          selectStatus: this.selectItem,
-          form: this.form,
-          selectCountry: this.selectCountry
-        })
-        .then(response => {
-          this.shipmentsCount = response.data;
-        })
-        .catch(error => {
-          if (error.response.status === 500) {
-            eventBus.$emit("errorEvent", error.response.statusText);
-            return;
-          } else if (
-            error.response.status === 401 ||
-            error.response.status === 409
-          ) {
-            eventBus.$emit("reloadRequest", error.response.statusText);
-          }
-          this.errors = error.response.data.errors;
-        });
-    },
-    changeCat(item) {
-      this.select = {
-        branch_name: "All",
-        id: "all"
-      };
-      this.AllBranches = item.branches;
     }
-  },
-  created() {
-    eventBus.$on("selectClear", data => {
-      this.selected = [];
-    });
-
-    eventBus.$on("refreshShipEvent", data => {
-      this.sortItem();
-    });
-    eventBus.$on("TrackEvent", data => {
-      this.updateModal = true;
-    });
-
-    eventBus.$on("distanceEvent", data => {
-      this.distAlert(data);
-    });
-  },
-  beforeDestroy() {
-    clearInterval(this.timer);
-  },
-  mounted() {
-    this.loader = true;
-    this.getBranch();
-    this.filterCount();
-    axios
-      .get("/getCountry")
-      .then(response => {
-        this.AllCountries = response.data;
-        this.loader = false;
-      })
-      .catch(error => {
-        this.loader = false;
-        if (error.response.status === 500) {
-          eventBus.$emit("errorEvent", error.response.statusText);
-          return;
-        } else if (
-          error.response.status === 401 ||
-          error.response.status === 409
-        ) {
-          eventBus.$emit("reloadRequest", error.response.statusText);
-        }
-        this.errors = error.response.data.errors;
-      });
-
-    axios
-      .get("/getShipmentsCount")
-      .then(response => {
-        this.shipmentsCount = response.data;
-      })
-      .catch(error => {
-        if (error.response.status === 500) {
-          eventBus.$emit("errorEvent", error.response.statusText);
-          return;
-        } else if (
-          error.response.status === 401 ||
-          error.response.status === 409
-        ) {
-          eventBus.$emit("reloadRequest", error.response.statusText);
-        }
-        this.errors = error.response.data.errors;
-      });
-    axios
-      .get("/getStatuses")
-      .then(response => {
-        this.AllStatus = response.data;
-      })
-      .catch(error => {
-        this.errors = error.response.data.errors;
-      });
-
-    axios
-      .get("/updateCancelled")
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        if (error.response.status === 500) {
-          eventBus.$emit("errorEvent", error.response.statusText);
-          return;
-        } else if (
-          error.response.status === 401 ||
-          error.response.status === 409
-        ) {
-          eventBus.$emit("reloadRequest", error.response.statusText);
-        }
-        this.errors = error.response.data.errors;
-      });
-
-    this.sortItem();
-  },
-  // computed: {
-  //     resetFilter() {
-  //         if(this.between.start < this.shipmentsCount) {
-  //             this.between.start = 1
-  //             this.between.end = 500
-  //             this.sortItem()
-  //         }
-  //     }
-  // },
-  // watch: {
-  //     checked() {
-  //         let period = this.between.start
-  //         let countS = this.shipmentsCount
-
-  //         if ((period > countS)) {
-  //             // this.sortItem()
-  //             alert('oppps')
-  //         } else {
-  //             alert('oqqqs')
-  //             // this.filterCount()
-  //         }
-
-  //     }
-  // },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (vm.user.can["view shipments"]) {
-        next();
-      } else {
-        next("/unauthorized");
-      }
-    });
-  }
 };
 </script>
 
 <style>
 #create .speed-dial {
-  position: absolute;
+    position: absolute;
 }
 
 #create .btn--floating {
-  position: relative;
+    position: relative;
 }
 
 .btn__content i {
-  color: #fff !important;
-  width: 50px;
+    color: #fff !important;
+    width: 50px;
 }
 
 .speed-dial__list i {
-  color: #fff !important;
+    color: #fff !important;
 }
 
 table.v-table tbody td:first-child,
@@ -987,11 +1023,11 @@ table.v-table thead td:first-child,
 table.v-table thead td:not(:first-child),
 table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
-  padding: 0 6px;
-  font-size: 14px !important;
+    padding: 0 6px;
+    font-size: 14px !important;
 }
 
 #input-cont .v-input__control {
-  margin-top: -20px !important;
+    margin-top: -20px !important;
 }
 </style>

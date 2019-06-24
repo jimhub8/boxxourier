@@ -114,7 +114,7 @@ class StatusController extends Controller
         // $derivery_time = $request->form['derivery_time'];
         // $remark = $request->form['remark'];
         // $derivery_date = $request->form['scheduled_date'];
-        // $shipment = Shipment::whereIn('id', $id)->update(['printed' => 1, 'printReceipt' => 1]);
+        $shipment = Shipment::whereIn('id', $id)->update(['printed' => 1, 'printReceipt' => 1]);
         return $print_shipment;
     }
     public function getStickers(Request $request)

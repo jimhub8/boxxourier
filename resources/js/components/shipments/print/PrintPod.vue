@@ -17,9 +17,9 @@
                         <!-- COURIER SCRIPTS PVT LTD. -->
                         <v-flex xs5 sm5>
                             <v-card style="border: 1px solid #000;">
-                                <img src="storage/logo-white.png" alt="SpeedBall" sizes="100">
+                                <img src="storage/logo-white.png" alt="Boxleo" sizes="100">
                                 <v-card-title primary-title>
-                                    <h3 class="headline mb-0">SpeedBall Courier Services.</h3>
+                                    <h3 class="headline mb-0">Boxleo Courier Services.</h3>
                                 </v-card-title>
                                 <v-card-actions>
                                     <v-list two-line>
@@ -38,7 +38,7 @@
                                                 Phone:
                                             </v-list-tile-action>
                                             <v-list-tile-content>
-                                                <v-list-tile-title>+25420760877</v-list-tile-title>
+                                                <v-list-tile-title>+254743332743</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                         <v-list-tile>
@@ -47,7 +47,7 @@
                                                 Email:
                                             </v-list-tile-action>
                                             <v-list-tile-content>
-                                                <v-list-tile-title>info@speedballcourier.com</v-list-tile-title>
+                                                <v-list-tile-title>info@boxleo.co.ke</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                     </v-list>
@@ -76,7 +76,7 @@
                                                 {{ showItems.bar_code }}
                                             </v-list-tile-title>
                                         </v-list-tile-content>
-                                    </v-list-tile> --> 
+                                    </v-list-tile> -->
                                 </v-card-title>
                                 <v-card-actions>
                                     <v-list-tile>
@@ -117,7 +117,7 @@
                                                 <b>Name</b>
                                             </v-list-tile-action>
                                             <v-list-tile-content>
-                                                <v-list-tile-title>SpeedBall</v-list-tile-title>
+                                                <v-list-tile-title>Boxleo</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                         <v-list-tile>
@@ -126,7 +126,7 @@
                                                 <b>Phone</b>
                                             </v-list-tile-action>
                                             <v-list-tile-content>
-                                                <v-list-tile-title>+25420760877</v-list-tile-title>
+                                                <v-list-tile-title>+254743332743</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                         <v-list-tile>

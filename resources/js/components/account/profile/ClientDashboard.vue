@@ -7,14 +7,13 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <img class="avatar" :src="user.profile"
+                            <img class="avatar" style="width: 100px;height: 60px;border-radius: 10px;" :src="user.profile"
                             width="30px"> Welcome {{ user.name }}!
                         </div>
                         <div class="panel-body numbers" style="padding-top:20px;background: url('storage/usa.gif') no-repeat right;background-size: contain;">
                             <h5 style="    font-family: inherit;"><b
-                                style="border: 1px solid #a1b3cb;color: #285189;padding: 5px 10px;border-radius: 2px;line-height: 50px;"><img
-                                    style="margin-top: -4px;"
-                                    src="/storage/kenya.jpg" width="20px">
+                                style="border: 1px solid #a1b3cb;color: #285189;padding: 5px 10px;border-radius: 2px;line-height: 50px;">
+                                <img style="margin-top: -4px;" src="/storage/kenya.jpg" width="20px">
                                 Your Shipto Address</b>
                                 <br>{{ user.name }}, <br>
                                 <a href="dashboard/profile" style="font-size:13px;"><i class="ti-mouse-alt"></i> Choose your

@@ -15,6 +15,9 @@ import Print from 'vue-print-nb'
 // import VueChartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 // import 'material-design-icons-iconfont/dist/material-design-icons.css'
+// import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
+import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure you are using css-loader
+
 import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 import 'vuetify/dist/vuetify.min.css'
 // import VueCharts from 'vue-chartjs'
@@ -23,6 +26,9 @@ import JsonExcel from 'vue-json-excel'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { abilitiesPlugin } from '@casl/vue'
 import VueChatScroll from 'vue-chat-scroll'
+// Vue.use(Vuetify, {
+//     iconfont: 'mdi'
+//   })
 // import VueResource from "vue-resource"
 // window.Echo = new Echo({
 
@@ -37,9 +43,9 @@ import { Bar, Line } from 'vue-chartjs'
 window.eventBus = new Vue()
 import Pusher from 'pusher-js';
 
-import Toaster from 'v-toaster'
-import 'v-toaster/dist/v-toaster.css'
-Vue.use(Toaster, { timeout: 5000 })
+// import Toaster from 'v-toaster'
+// import 'v-toaster/dist/v-toaster.css'
+// Vue.use(Toaster, { timeout: 5000 })
 // import jspdf from 'jspdf'
 // vue.use(Vuetify, {
 //     iconfont: 'mdi'
@@ -62,9 +68,9 @@ Vue.use(Vuetify)
 Vue.use(VueRouter)
 
 
-let passportAuthorizedclients = require('./components/passport/AuthorizedClients.vue')
-let passportClients = require('./components/passport/Clients.vue')
-let passportPersonalaccesstokens = require('./components/passport/PersonalAccessTokens.vue')
+import passportAuthorizedclients from './components/passport/AuthorizedClients.vue'
+import passportClients from './components/passport/Clients.vue'
+import passportPersonalaccesstokens from './components/passport/PersonalAccessTokens.vue'
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -96,7 +102,7 @@ import myProfile from './components/account/profile/Profile';
 import myCompany from './components/company/Company.vue';
 import myCustomer from './components/customers/Customer.vue';
 import mysubsicriber from './components/emails/Subscribe.vue';
-// import myInvice from './components/invoices/Invoice.vue';
+import myInvoice from './components/invoices/Invoices';
 // import myReceipt from './components/receipt/Receipt.vue';
 import myReports from './components/reports/Reports.vue';
 import mybranchShip from './components/branches/BranchShipments.vue';
@@ -106,7 +112,7 @@ import myTasks from './components/tasks/Task.vue';
 import myUploadFile from './components/upload/UploadFile.vue';
 import myCharges from './components/charge/Charge.vue';
 import myTown from './components/town/Town.vue';
-import mySticker from './components/shipments/print/Sticker.vue';
+// import mySticker from './components/shipments/print/Sticker.vue';
 import myWaybill from './components/shipments/print/Waybills.vue';
 import myStatus from './components/shipments/status/Status.vue';
 import myCountry from './components/country/Country.vue';
@@ -138,7 +144,7 @@ const routes = [
     { path: '/companies', component: myCompany },
     { path: '/subscribers', component: mysubsicriber },
     { path: '/customers', component: myCustomer },
-    // { path: '/invoices', component: myInvice },
+    { path: '/invoices', component: myInvoice },
     // { path: '/receipts', component: myReceipt },
     { path: '/reports', component: myReports },
     { path: '/roles', component: myRoles },
@@ -149,7 +155,7 @@ const routes = [
     { path: '/charges', component: myCharges },
     { path: '/towns', component: myTown },
     { path: '/print', component: myWaybill },
-    { path: '/sticker', component: mySticker },
+    // { path: '/sticker', component: mySticker },
 
     { path: '/status', component: myStatus },
     { path: '/country', component: myCountry },
@@ -185,8 +191,8 @@ const app = new Vue({
         myBranch, myProfile, myCompany, myCustomer, mysubsicriber,
         myReports, mybranchShip, myRoles, myscheduled, myTasks, myUploadFile, myCharges,
         myTown, myWaybill, myStatus, myStatuses, myCountry, myRinder, myCustDash, myDrivDash,
-        myunauth, myDash, myFilter, myChatty, myFinance, myFinClient, mySticker, myDStatus, myLogs, mySc,
-        passportAuthorizedclients, passportClients, passportPersonalaccesstokens,
+        myunauth, myDash, myFilter, myChatty, myFinance, myFinClient, myDStatus, myLogs, mySc,
+        passportAuthorizedclients, passportClients, passportPersonalaccesstokens, myInvoice, 
         Api
         // myContainer
     },

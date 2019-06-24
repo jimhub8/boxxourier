@@ -101,7 +101,7 @@
                                     </v-btn>
                                     <span>Charges</span>
                                 </v-tooltip>
-                                    <form :action="'/invoice/'+props.item.id" method="get" target="_blank">
+                                    <!-- <form :action="'/invoice/'+props.item.id" method="get" target="_blank">
                                         <input type="hidden" name="_token" :value="csrf">
                                         <input type="hidden" name="type" value="stream">
                                         <v-tooltip bottom>
@@ -110,17 +110,17 @@
                                             </v-btn>
                                             <span>Stream invoice</span>
                                         </v-tooltip>
-                                    </form>
-                                    <form :action="'/invoice/'+props.item.id" method="get">
-                                        <input type="hidden" name="_token" :value="csrf">
-                                        <input type="hidden" name="type" value="download">
+                                    </form> -->
+                                    <!-- <form :action="'/invoice/'+props.item.id" method="get"> -->
+                                        <!-- <input type="hidden" name="_token" :value="csrf">
+                                        <input type="hidden" name="type" value="download"> -->
                                         <v-tooltip bottom>
-                                            <v-btn flat slot="activator" color="primary" icon class="mx-0" type="submit">
+                                            <v-btn flat slot="activator" color="primary" icon class="mx-0" @click="openInvoice(props.item)">
                                                 <v-icon>cloud_upload</v-icon>
                                             </v-btn>
                                             <span>Download invoice</span>
                                         </v-tooltip>
-                                    </form>
+                                    <!-- </form> -->
                             </td>
                         </template>
                         <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -133,6 +133,7 @@
         </v-container>
     </v-content>
     <mySCharges :mySCharges="chargeModal" @closeRequest="close" :updateCharges="shipment" @alertRequest="showalert"></mySCharges>
+    <myInvoice></myInvoice>
     <v-snackbar :timeout="timeout" bottom="bottom" :color="color" left="left" v-model="snackbar">
         {{ message }}
         <v-icon dark right>check_circle</v-icon>
@@ -142,12 +143,13 @@
 
 <script>
 import VueBarcode from "vue-barcode";
-let mySCharges = require("../shipments/Charge");
+import mySCharges from "../shipments/Charge";
+import myInvoice from '../invoices/invoice'
 export default {
   props: ["user"],
   components: {
     barcode: VueBarcode,
-    mySCharges
+    mySCharges, myInvoice
   },
   data() {
     return {
@@ -481,6 +483,9 @@ export default {
     },
     cancelAutoUpdate() {
       clearInterval(this.timer);
+    },
+    openInvoice(data) {
+        eventBus.$emit('openInvoiceEvent', data)
     }
   },
   computed: {

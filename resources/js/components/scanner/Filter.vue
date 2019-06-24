@@ -88,7 +88,7 @@
                                     <td class="text-xs-right" v-else>{{ props.item.status }}</td>
                                     <td class="text-xs-right">{{ props.item.derivery_date }}</td>
                                     <td class="text-xs-right">{{ props.item.speciial_instruction }}</td>
-                                </template> 
+                                </template>
                                 <!-- <v-alert slot="no-results" :value="true" color="error" icon="warning">
                                 Your search for "{{ search }}" found no results.
                             </v-alert> -->
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-let UpdateShipmentStatus = require("../shipments/UpdateShipmentStatus");
+import UpdateShipmentStatus from "../shipments/UpdateShipmentStatus";
 export default {
     components: {
         UpdateShipmentStatus
@@ -258,7 +258,7 @@ export default {
             this.UpdateShipmentModel = false;
         },
     },
-    
+
   created() {
     eventBus.$on("selectClear", data => {
         this.snackbar = true

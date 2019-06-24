@@ -60,7 +60,7 @@ export default {
                 })
         },
         download() {
-            let pdfName = 'SpeedBall';
+            let pdfName = 'Boxleo';
             var doc = new jspdf();
             // doc.text(this.name, 10, 10);
             var doc = new jspdf();
@@ -87,25 +87,25 @@ export default {
                     doc.text(50, 55, 'Warehousing');
                     doc.text(50, 60, 'Freight Service');
 
-                    doc.text(100, 20, 'Speedball Courier Services Ltd ');
+                    doc.text(100, 20, 'Boxleo Courier Services Ltd ');
                     doc.text(100, 30, 'Head Quarter, Nairobi');
                     doc.text(100, 35, 'Court-290, Savannah Center');
                     doc.text(100, 40, 'Embakasi Nairobi, Kenya');
                     doc.text(100, 45, 'Phone: +254 728 492 446');
                     doc.text(100, 50, '+254 799 869 875');
                     doc.text(100, 55, '+254 799 864 844');
-                    doc.text(100, 60, 'www.speedballcourier.com');
-                    doc.text(100, 65, 'info@speedballcourier.com');
+                    doc.text(100, 60, 'www.boxleocourier.com');
+                    doc.text(100, 65, 'info@boxleo.co.ke');
 
                     doc.text(150, 20, 'Uganda');
                     doc.text(150, 30, 'Phone: +256 783 060 861');
                     doc.text(150, 35, '+256 783 060 641, +256 783 013 047');
-                    doc.text(150, 40, 'Info.ug@speedballcourier.com');
+                    doc.text(150, 40, 'Info.ug@boxleocourier.com');
                     doc.text(150, 45, 'Tanzania');
                     doc.text(150, 50, 'Phone: +255 746 416 642');
                     doc.text(150, 55, '+255 758 003 991');
                     doc.text(150, 60, '+255 759 842 568');
-                    doc.text(150, 65, 'Info.tz@speedballcourier.com');
+                    doc.text(150, 65, 'Info.tz@boxleocourier.com');
 
                     doc.setFontSize(11)
                     doc.setTextColor('black')
@@ -130,7 +130,7 @@ export default {
                     doc.text(120, 90, 'Name: ' + element['client_name']);
                     doc.text(120, 100, 'Phone Number: ' + element['client_phone']);
                     doc.text(120, 110, 'Client To Pay: ' + element['cod_amount']);
-                    doc.text(120, 120, 'Till No.: 877838');
+                    doc.text(120, 120, 'Till No.: 625484');
                     doc.text(120, 124, 'Destination:' + element['client_city']);
                     doc.text(120, 130, 'Client to pay the stated amount before picking up');
                     doc.text(120, 135, 'the parcel. The prices may change without prior');
@@ -150,25 +150,25 @@ export default {
                     doc.text(50, 195, 'Warehousing');
                     doc.text(50, 200, 'Freight Service');
 
-                    doc.text(100, 160, 'Speedball Courier Services Ltd ');
+                    doc.text(100, 160, 'Boxleo Courier Services Ltd ');
                     doc.text(100, 170, 'Head Quarter, Nairobi');
                     doc.text(100, 175, 'Court-290, Savannah Center');
                     doc.text(100, 180, 'Embakasi Nairobi, Kenya');
                     doc.text(100, 185, 'Phone: +254 728 492 446');
                     doc.text(100, 190, '+254 799 869 875');
                     doc.text(100, 195, '+254 799 864 844');
-                    doc.text(100, 200, 'www.speedballcourier.com');
-                    doc.text(100, 205, 'info@speedballcourier.com');
+                    doc.text(100, 200, 'www.boxleocourier.com');
+                    doc.text(100, 205, 'info@boxleo.co.ke');
 
                     doc.text(150, 160, 'Uganda');
                     doc.text(150, 170, 'Phone: +256 783 060 861');
                     doc.text(150, 175, '+256 783 060 641, +256 783 013 047');
-                    doc.text(150, 180, 'Info.ug@speedballcourier.com');
+                    doc.text(150, 180, 'Info.ug@boxleocourier.com');
                     doc.text(150, 185, 'Tanzania');
                     doc.text(150, 190, 'Phone: +255 746 416 642');
                     doc.text(150, 195, '+255 758 003 991');
                     doc.text(150, 200, '+255 759 842 568');
-                    doc.text(150, 205, 'Info.tz@speedballcourier.com');
+                    doc.text(150, 205, 'Info.tz@boxleocourier.com');
 
                     doc.setFontSize(11)
                     doc.setTextColor('black')
@@ -190,7 +190,7 @@ export default {
                     doc.text(120, 230, 'Name: ' + element['client_name']);
                     doc.text(120, 240, 'Phone Number: ' + element['client_phone']);
                     doc.text(120, 250, 'Client To Pay: ' + element['cod_amount']);
-                    doc.text(120, 260, 'Till No.: 877838');
+                    doc.text(120, 260, 'Till No.: 625484');
                     doc.text(120, 270, 'Destination:' + element['client_city']);
                     doc.text(120, 275, 'Client to pay the stated amount before picking up');
                     doc.text(120, 280, 'the parcel. The prices may change without prior');

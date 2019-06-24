@@ -329,8 +329,8 @@
 </template>
 
 <script>
-let AddShipment = require('./AddShipment')
-let EditShipment = require('./EditShipment')
+import AddShipment from './AddShipment'
+import EditShipment from './EditShipment'
 export default {
     components: {
         AddShipment,
@@ -489,7 +489,7 @@ export default {
           } else {
             axios.patch('/getShipments/${this.list.id}')
                .then((response) => {
-                 this.AllShipments.push(this.editedItem)               
+                 this.AllShipments.push(this.editedItem)
               })
                .catch((error) => this.errors = error.response.data.errors)
           }

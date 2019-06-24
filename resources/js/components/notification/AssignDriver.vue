@@ -53,9 +53,7 @@ export default {
                 })
                 .then(response => {
                     this.loading = false
-                    this.$emit("alertRequest");
-                    this.$emit("alertRequest");
-                    eventBus.$emit('selectClear');
+                    eventBus.$emit("alertRequest", 'Rider assigned')
                     this.close();
                     //   this.$emit("closeRequest");
                 })

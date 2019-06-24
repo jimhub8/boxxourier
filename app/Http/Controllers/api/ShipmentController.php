@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ShipmentResource;
-use App\Http\Resources\UserResource;
 use App\Notifications\ShipmentNoty;
 use App\Pincode;
 use App\Product;
 use App\Shipment;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Notification;
 use App\ShipmentStatus;
 
@@ -90,14 +88,10 @@ class ShipmentController extends Controller
         // return $user_id;
         $shipment->shipment_id = random_int(1000000, 9999999);
         $shipment->save();
-        return response()->json(['success' => $shipment, 'status' => '200'], '200');
         $users = $this->getAdmin();
-        // $users = User::all();
-        // if ($shipment->save()) {
-        //     $shipment->products()->saveMany($products);
-        // }
         $type = 'shipment';
         Notification::send($users, new ShipmentNoty($shipment, $type));
+        return response()->json(['success' => $shipment, 'status' => '200'], '200');
         // return ShipmentResource::collection($shipment);
 
         return response()->json(['success' => $shipment, 'status' => '200'], '200');
@@ -206,18 +200,28 @@ class ShipmentController extends Controller
 
     public function getAdmin()
     {
-        $usersRolem = User::with('roles')->paginate(500);
-        $userArr = [];
-        foreach ($usersRolem as $user) {
-            // var_dump($user->roles); die;
-            foreach ($user->roles as $role) {
-                if ($role->name == 'Admin') {
-                    $userArr[] = $role->id;
-                }
-            }
+
+        $users = User::all();
+        $admin = [];
+        foreach ($users as $user) {
+            if ($user->hasRole('Admin')) {
+                $admin[] = $user;
+            };
         }
-        $users = $userArr;
-        return $admin = User::whereIn('id', $userArr)->paginate(500);
+        return $admin;
+        // $users = User::all();
+        // return $users->hasRole('Admin');
+        // $userArr = [];
+        // foreach ($usersRolem as $user) {
+        //     // var_dump($user->roles); die;
+        //     foreach ($user->roles as $role) {
+        //         if ($role->name == 'Admin') {
+        //             $userArr[] = $role->id;
+        //         }
+        //     }
+        // }
+        // $users = $userArr;
+        // return $admin = User::whereIn('id', $userArr)->paginate(500);
         // return UserResource::collection($admin);
     }
 

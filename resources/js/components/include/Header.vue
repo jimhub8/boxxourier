@@ -153,7 +153,6 @@
                                 <v-list-tile-title>Delivery Report</v-list-tile-title>
                             </router-link>
 
-
                             <router-link to="/status" class="v-list__tile theme--light" style="text-decoration: none">
                                 <v-list-tile-action>
                                     <v-icon>question_answer</v-icon>
@@ -290,12 +289,12 @@
           >
         </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <!-- <v-tooltip bottom style="margin-right: 10px;">
+                <v-tooltip bottom style="margin-right: 10px;">
                     <v-btn icon class="mx-0" @click="openShipment" slot="activator">
                         <v-icon color="white darken-2" large>add</v-icon>
                     </v-btn>
                     <span>Add Shipment</span>
-                </v-tooltip> -->
+                </v-tooltip>
                 <v-divider vertical></v-divider>
                 <Notifications :user="user"></Notifications>
                 <v-divider vertical></v-divider>
@@ -304,7 +303,7 @@
                 <!-- <form action="/logout" method="post">
                     <v-btn flat color="white" type="submit">Logout</v-btn>
                 </form> -->
-            <Logout :user="user"></Logout>
+                <Logout :user="user"></Logout>
 
         </v-toolbar>
     </v-app>
@@ -313,144 +312,184 @@
         {{ message }}
         <v-icon dark right>check_circle</v-icon>
     </v-snackbar>
-    <AddShipment :adddialog="dialog" @closeRequest="close" @alertRequest="showalert" :Allcustomer="Allcustomers" :user="user" :role="role" :AllBranches="AllBranches" :AllDrivers="AllDrivers"></AddShipment>
+    <AddShipment :last_id='last_id' :statuses="statuses" :addShipment="dialog" @closeRequest="close" @alertRequest="showalert" :Allcustomer="Allcustomers" :user="user" :role="role" :AllBranches="AllBranches" :AllDrivers="AllDrivers"></AddShipment>
 </div>
 </template>
 
 <script>
 import Notifications from "../notification/Notification";
 import AddShipment from"../shipments/Addshipment";
-import { vueTopprogress } from "vue-top-progress";
+import {
+    vueTopprogress
+} from "vue-top-progress";
 import Logout from "./Logout";
 // import chattyNoty from '../notification/chattyNoty'
 export default {
-  components: {
-    Notifications,
-    AddShipment,
-    vueTopprogress,
-    Logout
-    //  chattyNoty
-  },
-  props: ["user"],
-  data() {
-    return {
-      role: "",
-      Snackcolor: '',
-      color: "#1a76c0",
-      dialog: false,
-      drawer: true,
-      drawerRight: false,
-      right: null,
-      mode: "",
-      notifications: [],
-      company: {},
-      AllBranches: [],
-      Allcustomers: [],
-      AllDrivers: [],
-      snackbar: false,
-      timeout: 5000,
-      message: "Success",
-    };
-  },
-  methods: {
-    openShipment() {
-      this.dialog = true;
-      this.getBranch();
-      this.getCustomer();
-      this.getDrivers();
+    components: {
+        Notifications,
+        AddShipment,
+        vueTopprogress,
+        Logout
+        //  chattyNoty
     },
+    props: ["user"],
+    data() {
+        return {
+            role: "",
+            Snackcolor: '',
+            color: "#1a76c0",
+            dialog: false,
+            drawer: true,
+            drawerRight: false,
+            right: null,
+            mode: "",
+            notifications: [],
+            last_id: null,
+            statuses: [],
+            company: {},
+            AllBranches: [],
+            Allcustomers: [],
+            AllDrivers: [],
+            snackbar: false,
+            timeout: 5000,
+            message: "Success",
+        };
+    },
+    methods: {
+        openShipment() {
+            this.dialog = true;
+            this.getStatus();
+            this.getLastId();
+            this.getBranch();
+            this.getCustomer();
+            this.getDrivers();
+        },
 
-    getCustomer() {
-      axios
-        .get("/getCustomer")
-        .then(response => {
-          this.Allcustomers = response.data;
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors;
-        });
-    },
-    getDrivers() {
-      axios
-        .get("/getDrivers")
-        .then(response => {
-          this.AllDrivers = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-          this.errors = error.response.data.errors;
-        });
-    },
-    getBranch() {
-      axios
-        .get("/getBranchEger")
-        .then(response => {
-          this.AllBranches = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-          this.errors = error.response.data.errors;
-        });
-    },
-    close() {
-      this.dialog = false;
-    },
+        getLastId() {
+            axios
+                .get("/getLastId")
+                .then(response => {
+                    this.last_id = response.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        eventBus.$emit('errorEvent', error.response.statusText)
+                        return
+                    } else if (error.response.status === 401 || error.response.status === 409) {
+                        eventBus.$emit('reloadRequest', error.response.statusText)
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+        getCustomer() {
+            axios
+                .get("/getCustomer")
+                .then(response => {
+                    this.Allcustomers = response.data;
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
+        },
+        getDrivers() {
+            axios
+                .get("/getDrivers")
+                .then(response => {
+                    this.AllDrivers = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errors = error.response.data.errors;
+                });
+        },
+        getBranch() {
+            axios
+                .get("/getBranchEger")
+                .then(response => {
+                    this.AllBranches = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errors = error.response.data.errors;
+                });
+        },
+        close() {
+            this.dialog = false;
+        },
 
-    showalert(data) {
-      this.message = data;
-      this.Snackcolor = "indigo";
-      this.snackbar = true;
-    },
-    showerror(data) {
-        this.message = data;
-        this.Snackcolor = "red";
-        this.snackbar = true;
-    }
-  },
-  created() {
-    eventBus.$on("progressEvent", data => {
-      this.$refs.topProgress.start();
-    });
-    eventBus.$on("StoprogEvent", data => {
-      this.$refs.topProgress.done();
-    });
-    eventBus.$on("alertRequest", data => {
-      this.showalert(data)
-    });
-    eventBus.$on("reloadRequest", data => {
-      this.showalert(data)
-      window.location.reload()
+        showalert(data) {
+            this.message = data;
+            this.Snackcolor = "indigo";
+            this.snackbar = true;
+        },
+        showerror(data) {
+            this.message = data;
+            this.Snackcolor = "red";
+            this.snackbar = true;
+        },
 
-    });
+        getStatus() {
+
+            axios
+                .get("/getStatuses")
+                .then(response => {
+                    this.statuses = response.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        eventBus.$emit('errorEvent', error.response.statusText)
+                        return
+                    } else if (error.response.status === 401 || error.response.status === 409) {
+                        eventBus.$emit('reloadRequest', error.response.statusText)
+                    }
+                    this.errors = error.response.data.errors;
+                });
+        },
+    },
+    created() {
+        eventBus.$on("progressEvent", data => {
+            this.$refs.topProgress.start();
+        });
+        eventBus.$on("StoprogEvent", data => {
+            this.$refs.topProgress.done();
+        });
+        eventBus.$on("alertRequest", data => {
+            this.showalert(data)
+        });
+        eventBus.$on("reloadRequest", data => {
+            this.showalert(data)
+            window.location.reload()
+
+        });
 
         eventBus.$on("errorEvent", data => {
             this.showerror(data);
         });
-  },
-  mounted() {
-    // axios.post('/getLogo')
-    //     .then((response) => {
-    //         this.company = response.data
-    //     })
-    //     .catch((error) => {
-    //         this.errors = error.response.data.errors
-    //     })
-  }
+    },
+    mounted() {
+        // axios.post('/getLogo')
+        //     .then((response) => {
+        //         this.company = response.data
+        //     })
+        //     .catch((error) => {
+        //         this.errors = error.response.data.errors
+        //     })
+    }
 };
 </script>
 
 <style scoped>
 .v-expansion-panel__container:hover {
-  border-radius: 10px !important;
-  width: 90% !important;
-  margin-left: 15px !important;
-  background: #e3edfe !important;
-  color: #1a73e8 !important;
+    border-radius: 10px !important;
+    width: 90% !important;
+    margin-left: 15px !important;
+    background: #e3edfe !important;
+    color: #1a73e8 !important;
 }
 
 .theme--light {
-  background-color: #212120 !important;
-  /* background: url('storage/logo1.jpg') !important; */
-  color: #fff !important;
+    background-color: #212120 !important;
+    /* background: url('storage/logo1.jpg') !important; */
+    color: #fff !important;
 }
 </style>

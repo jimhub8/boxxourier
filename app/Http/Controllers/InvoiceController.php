@@ -18,8 +18,8 @@ class InvoiceController extends Controller {
 
 		// });
 		$data = array(
-			'shipment' => $shipment, 
-			// 'user' => $user, 
+			'shipment' => $shipment,
+			// 'user' => $user,
 			// 'pdf' => base64_decode($pdf->output()),
 		);
         return view('emails.verifyEmailFirst', compact('shipment'));
@@ -36,13 +36,13 @@ class InvoiceController extends Controller {
         // dd($cart);
         // dd(base64_decode($pdf->output()));
 		$data = array(
-			'shipment' => $shipment, 
-			'user' => $user, 
+			'shipment' => $shipment,
+			'user' => $user,
 			// 'pdf' => base64_decode($pdf->output()),
 		);
-		
+
         // dd($data);
-        Mail::to('jimkiarie8@gmail.com')->queue(new InvoiceMail($data, $shipment));
+        // Mail::to('jimkiarie8@gmail.com')->queue(new InvoiceMail($data, $shipment));
         $pdf = app('dompdf.wrapper')->loadView('emails.invoice', ['shipment' => $shipment]);
         if ($type == 'stream') {
             return $pdf->stream('invoice.pdf');
@@ -54,5 +54,20 @@ class InvoiceController extends Controller {
 		// return 'success you are a geneus';
         // return view('emails.invoice', compact('data'));
 
+    }
+    public function invoiceOrder()
+    {
+        $shipment = Shipment::where('id', 1)->get();
+        return view('emails.invoice', compact('shipment'));
+    }
+
+    public function filterInvoice(Request $request)
+    {
+        // return $request->all();
+		$date_array = array(
+			'start_date' => $request->start_date,
+			'end_date' => $request->end_date,
+		);
+        return Shipment::whereBetween('created_at', $date_array)->take('20')->get();
     }
 }

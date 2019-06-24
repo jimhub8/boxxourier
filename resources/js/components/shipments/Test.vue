@@ -202,7 +202,7 @@ export default {
         doc.text(
           5,
           170,
-          "Clients are requested to pay through M-PESA TILL NUMBER - 877838 "
+          "Clients are requested to pay through M-PESA TILL NUMBER - 625484 "
         );
         doc.text(
           5,

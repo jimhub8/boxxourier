@@ -49,9 +49,9 @@
 </template>
 
 <script>
-let AddTask = require('./AddTask');
-let EditTask = require('./EditTask');
-// let ShowTask = require('./ShowTask');
+import AddTask from './AddTask';
+import EditTask from './EditTask';
+// import ShowTask from './ShowTask';
 
 export default {
 

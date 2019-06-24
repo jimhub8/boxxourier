@@ -101,10 +101,10 @@
 </template>
 
 <script>
-let AddInvoice = require('./AddInvoice');
-let EditInvoice = require('./EditInvoice');
-let ShowInvoice = require('./ShowInvoice');
-let MailInvoice = require('./EMail');
+import AddInvoice from './AddInvoice';
+import EditInvoice from './EditInvoice';
+import ShowInvoice from './ShowInvoice';
+import MailInvoice from './EMail';
 export default {
     components: {
         AddInvoice,

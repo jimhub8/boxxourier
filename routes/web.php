@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('getshipD/{id}', 'ShipmentController@getshipD')->name('getshipD');
 	Route::any('updateCancelled', 'ShipmentController@updateCancelled')->name('updateCancelled');
 	Route::get('getShipStatus/{id}', 'ShipmentController@getShipStatus')->name('getShipStatus');
+	Route::any('getLastId', 'ShipmentController@getLastId')->name('getLastId');
 
 	Route::post('filterShipment', 'FilterController@filterShipment')->name('filterShipment');
 	Route::post('filterCount', 'FilterController@filterCount')->name('filterCount');
@@ -362,6 +363,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::any('invoiceOrder', 'InvoiceController@invoiceOrder')->name('invoiceOrder');
 	Route::any('invoice/{id}', 'InvoiceController@invoice')->name('invoice');
+	Route::any('filterInvoice', 'InvoiceController@filterInvoice')->name('filterInvoice');
 
 
 

@@ -137,7 +137,7 @@
 </template>
 
 <script>
-let UpdateShipmentStatus = require("../UpdateShipmentStatus");
+import UpdateShipmentStatus from "../UpdateShipmentStatus";
 import VueBarcode from "vue-barcode";
 export default {
     props: ["user", "role"],
@@ -217,7 +217,7 @@ export default {
                 start_date: '',
                 end_date: '',
             },
-            
+
             headers: [{
                     text: "Waybill Date",
                     value: "created_at"
@@ -396,7 +396,7 @@ export default {
         close() {
             this.UpdateShipmentModel = false;
         },
-        
+
         showalert() {
             this.message = "success";
             this.color = "indigo";
@@ -449,7 +449,7 @@ export default {
                     this.errors = error.response.data.errors;
                 });
         },
-        
+
         sortItem() {
             this.loading = true;
             axios
@@ -469,7 +469,7 @@ export default {
                     this.errors = error.response.data.errors;
                 });
         },
-        
+
         UpdateShipmentStatus(item) {
             if (this.selected.length < 1) {
                 this.message = "please select a shipment";
@@ -480,7 +480,7 @@ export default {
             }
         },
     },
-    
+
     created() {
         eventBus.$on("selectClear", data => {
             this.selected = [];
@@ -529,7 +529,7 @@ export default {
                 this.errors = error.response.data.errors;
             })
 
-            
+
         // axios.get('/getCustomer')
         //     .then((response) => {
         //         this.clients = response.data
@@ -539,7 +539,7 @@ export default {
         //         this.loader = false
         //     })
 
-            
+
         axios.get('/getStatuses')
             .then((response) => {
                 this.statuses = response.data
@@ -547,7 +547,7 @@ export default {
             .catch((error) => {
                 this.errors = error.response.data.errors
             })
-            
+
     }
 }
 </script>

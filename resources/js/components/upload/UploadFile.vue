@@ -80,7 +80,7 @@
 </template>
 
 <script>
-let Assign = require('./Assign');
+import Assign from './Assign';
 export default {
     components: {
         Assign,

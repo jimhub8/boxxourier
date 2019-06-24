@@ -1,11 +1,11 @@
 <template>
 <v-layout row justify-center>
-    <v-dialog v-model="openRequest" persistent max-width="600px">
+    <v-dialog v-model="dialog" persistent max-width="600px">
         <v-card>
             <v-card-title>
-                <span class="headline">User Profile</span>
+                <span class="headline">Shipment</span>
                 <v-spacer></v-spacer>
-                <router-link to="/Shipments" class="v-list__tile v-list__tile--link" v-if="user.can['view shipments']">
+                <router-link to="/Shipments" class="v-list__tile v-list__tile--link">
                     <div class="v-list__tile__content">
                         <div class="v-list__tile__title">
                             Go To Shipments
@@ -13,7 +13,7 @@
                     </div>
                 </router-link>
                 <v-btn flat color="primary" @click="updateShip">Update Status</v-btn>
-                 <v-btn icon dark @click="close">
+                <v-btn icon dark @click="close">
                     <v-icon color="black">close</v-icon>
                 </v-btn>
             </v-card-title>
@@ -54,18 +54,32 @@ export default {
     components: {
         Update
     },
-    props: ['openRequest', 'shipment', 'user'],
+    // props: ['openRequest', 'shipment', 'user'],
     data() {
         return {
-
+            shipment: [],
+            dialog: false,
         }
+    },
+    created() {
+        eventBus.$on('notyOpenEvent', data => {
+            this.dialog = true;
+            this.noty(data)
+        })
     },
     methods: {
         updateShip() {
             eventBus.$emit('updateEvent', this.shipment)
         },
         close() {
-            this.$emit('closeRequest')
+            this.dialog = false
+        },
+        noty(item) {
+            axios.post(`/Notyshpments/${item}`).then(response => {
+                console.log(response.data);
+                this.shipment = response.data
+                // this.seeShipment from.data;
+            });
         }
     }
 }
