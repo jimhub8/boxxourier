@@ -61,7 +61,7 @@
 </template>
 
 <script>
-let myView = require("../orders/View");
+import myView from "../orders/View";
 export default {
     components: {
         myView

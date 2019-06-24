@@ -110,7 +110,7 @@
 </template>
 
 <script>
-let AddBranch = require('./AddBranch')
+import AddBranch from './AddBranch'
 export default {
     props: ['user'],
     components: {
@@ -274,7 +274,7 @@ export default {
         // test: function () {
         //     var vm = this;
         //     return function (item) {
-        //         return 'branch/1';  
+        //         return 'branch/1';
         //     };
         // },
         formIsValid() {

@@ -88,8 +88,8 @@
 </template>
 
 <script>
-let AddSubscribers = require("./AddSubscribers");
-let Unsubscribed = require("./Unsubscribed");
+import AddSubscribers from "./AddSubscribers";
+import Unsubscribed from "./Unsubscribed";
 export default {
   props: ["user", "role"],
   components: {

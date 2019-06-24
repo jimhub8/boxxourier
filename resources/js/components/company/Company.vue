@@ -62,9 +62,9 @@
 </template>
 
 <script>
-let AddCompany = require('./AddCompany')
-let EditCompany = require('./EditCompany')
-let Logo = require('./Logo')
+import AddCompany from './AddCompany'
+import EditCompany from './EditCompany'
+import Logo from './Logo'
 export default {
     props: ['user', 'role'],
     components: {

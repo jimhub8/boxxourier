@@ -107,7 +107,7 @@
                                 </div>
                             </div>
               </router-link>-->
-                        <v-list-group prepend-icon="print" v-if="user.can['print waybill']">
+                        <v-list-group prepend-icon="print" v-if="user.can['print waybill'] || user.can['print invoices']">
                             <v-list-tile slot="activator">
                                 <v-list-tile-title>Print</v-list-tile-title>
                             </v-list-tile>
@@ -120,14 +120,14 @@
                                     <div class="v-list__tile__title">Print Waybills</div>
                                 </div>
                             </router-link>
-                            <!-- <router-link to="/sticker" class="v-list__tile v-list__tile--link">
+                            <router-link to="/invoices" class="v-list__tile v-list__tile--link" v-if="user.can['print invoices']">
                                 <div class="v-list__tile__action">
                                     <i aria-hidden="true" class="icon material-icons">print</i>
                                 </div>
                                 <div class="v-list__tile__content">
-                                    <div class="v-list__tile__title">Print Stickers</div>
+                                    <div class="v-list__tile__title">Print Invoices</div>
                                 </div>
-                            </router-link> -->
+                            </router-link>
                         </v-list-group>
 
                         <!--  -->
@@ -318,7 +318,7 @@
 
 <script>
 import Notifications from "../notification/Notification";
-import AddShipment from"../shipments/Addshipment";
+import AddShipment from "../shipments/Addshipment";
 import {
     vueTopprogress
 } from "vue-top-progress";

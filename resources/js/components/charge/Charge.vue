@@ -57,9 +57,9 @@
 </template>
 
 <script>
-let AddCharge = require("./AddCharge");
-let EditCharge = require("./EditCharge");
-// let ShowTask = require('./ShowTask');
+import AddCharge from "./AddCharge";
+import EditCharge from "./EditCharge";
+// import ShowTask from './ShowTask';
 
 export default {
     components: {

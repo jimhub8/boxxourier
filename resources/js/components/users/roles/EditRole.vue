@@ -21,7 +21,7 @@
                                     </v-flex>
                                 </v-layout>
                                 <v-layout wrap>
-                                    <v-flex v-for="perm in sortPerm" :key="perm.id" xs6 sm3>
+                                    <v-flex v-for="(perm, index) in sortPerm" :key="index" xs6 sm3>
                                         <v-checkbox v-model="selected" :label="perm.name" :value="perm.name"></v-checkbox>
                                     </v-flex>
                                 </v-layout>
@@ -102,7 +102,7 @@ export default {
             });
     },
     computed: {
-      
+
         sortPerm() {
             return _.orderBy(this.permissions, 'name', 'asc')
         }

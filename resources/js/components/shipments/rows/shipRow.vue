@@ -151,8 +151,8 @@
                         <v-alert slot="no-results" :value="true" color="error" icon="warning">
                             Your search for "{{ search }}" found no results.
                         </v-alert>
-                         
-                             
+
+
                         </template>
                     </v-data-table>
                     <v-btn color="primary" raised style="float: right;" @click="UpdateShipmentStatus">Update Status</v-btn>
@@ -186,18 +186,18 @@
 <script>
 import VueBarcode from "vue-barcode";
 import AddShipment from"./AddShipment";
-let EditShipment = require("./EditShipment");
-let ShowShipment = require("../print/PrintSPdf");
-let UpdateShipment = require("./UpdateShipment");
-let UpdateShipmentStatus = require("./UpdateShipmentStatus");
-let AssignDriver = require("./AssignDriver");
-let AssignBranch = require("./AssignBranch");
-let TrackShipment = require("./TrackShipment");
-let myCsvFile = require("../csv/CsvFile");
-let mySCharges = require("./Charge");
-// let myPrintPod = require('./PrintPod')
-let myRows = require("./rows/Rows");
-// let myPrintSPdf = require('./PrintSPdf.js');
+import EditShipment from "./EditShipment";
+import ShowShipment from "../print/PrintSPdf";
+import UpdateShipment from "./UpdateShipment";
+import UpdateShipmentStatus from "./UpdateShipmentStatus";
+import AssignDriver from "./AssignDriver";
+import AssignBranch from "./AssignBranch";
+import TrackShipment from "./TrackShipment";
+import myCsvFile from "../csv/CsvFile";
+import mySCharges from "./Charge";
+// import myPrintPod from './PrintPod)
+import myRows from "./rows/Rows";
+// import myPrintSPdf from './PrintSPdf.js';
 export default {
     props: ["user", "role"],
     components: {

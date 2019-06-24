@@ -46,7 +46,7 @@
                 <!-- <v-btn @click="openAdd" color="primary">Add A Branch</v-btn> -->
                 <div v-show="!loader" style="width: 100%;">
                     <v-card-title>
-                        
+
                         <v-btn color="primary" flat @click="openAdd">Add A Status</v-btn>
                         Delivery Status
                         <v-spacer></v-spacer>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-let AddDStatus = require('./AddDStatus')
+import AddDStatus from './AddDStatus'
 export default {
     props: ['user'],
     components: {
@@ -189,7 +189,7 @@ export default {
     computed: {
         formIsValid() {
             return (
-                this.editedItem.name 
+                this.editedItem.name
             )
         },
     },

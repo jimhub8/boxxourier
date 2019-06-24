@@ -13,7 +13,7 @@
                         </v-flex>
                     </v-layout>
                 </div>
-                <v-btn raised color="primary" @click="filterInvoice" :disabled="loading" :loading="loading">Download PDF</v-btn>
+                <v-btn raised color="primary" @click="filterInvoice" :disabled="loading" :loading="loading">Download Invoces</v-btn>
             </div>
         </div>
     </div>

@@ -59,9 +59,9 @@
 </template>
 
 <script>
-let Create = require("./Create");
-let Edit = require("./Edit");
-// let ShowTask = require('./ShowTask');
+import Create from "./Create";
+import Edit from "./Edit";
+// import ShowTask from './ShowTask';
 
 export default {
     props: ['user'],
@@ -138,8 +138,8 @@ export default {
             this.catEdit = Object.assign({}, task);
             this.editedIndex = this.menus.indexOf(task);
             this.dispEdit = true;
-        }, 
-        getMenu() { 
+        },
+        getMenu() {
 
             var consumer_key = "vc4SsAN8ko64jNTY71lOZWvGThoGXASL";
             var consumer_secret = "MVMcOQi4uAOQH73s";
@@ -178,7 +178,7 @@ export default {
             //         alert('pass')
             //         console.log(error);
             //         console.log(response);
-                    
+
             //     }
             // )
 

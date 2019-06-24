@@ -24,7 +24,7 @@
                                     <!-- <v-checkbox v-model="selectAll" label="Unselect All" value="all" @change="unselectRoles" v-else></v-checkbox> -->
                                 </v-layout>
                                 <v-layout wrap>
-                                    <v-flex v-for="perm in sortPerm" :key="perm.id" xs6 sm3>
+                                    <v-flex v-for="(perm, index) in sortPerm" :key="index" xs6 sm3>
                                         <v-checkbox v-model="selected" :label="perm.name" :value="perm.name"></v-checkbox>
                                     </v-flex>
                                 </v-layout>

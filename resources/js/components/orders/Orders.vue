@@ -93,9 +93,9 @@
 </template>
 
 <script>
-let Create = require("./Create");
-// let Edit = require("./Edit");
-let myView = require("./View");
+import Create from "./Create";
+// import Edit from "./Edit";
+import myView from "./View";
 
 export default {
     props: ['user'],
@@ -248,7 +248,7 @@ export default {
         //     }
         // }
     },
-    
+
     beforeRouteEnter(to, from, next) {
         next(vm => {
             if (vm.user.can['view orders']) {

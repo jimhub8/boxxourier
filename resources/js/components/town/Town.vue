@@ -83,7 +83,7 @@
 </template>
 
 <script>
-let AddTown = require('./AddTown')
+import AddTown from './AddTown'
 export default {
     props: ['user', 'role'],
     components: {
@@ -206,7 +206,7 @@ export default {
     computed: {
         formIsValid() {
             return (
-                this.editedItem.town_name 
+                this.editedItem.town_name
             )
         },
     },

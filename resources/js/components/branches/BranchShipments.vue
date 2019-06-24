@@ -5,7 +5,7 @@
             <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
         </div>
 
- 
+
         <!-- Edit dialog -->
 
         <v-container fluid fill-height v-show="!loader">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-let AddBranch = require('./AddBranch')
+import AddBranch from './AddBranch'
 export default {
     props: ['user', 'role'],
     components: {

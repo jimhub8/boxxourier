@@ -78,7 +78,7 @@
 </template>
 
 <script>
-let AddCountry = require('./AddCountry')
+import AddCountry from './AddCountry'
 export default {
     props: ['user'],
     components: {
@@ -199,7 +199,7 @@ export default {
         // test: function () {
         //     var vm = this;
         //     return function (item) {
-        //         return 'country/1';  
+        //         return 'country/1';
         //     };
         // },
         formIsValid() {

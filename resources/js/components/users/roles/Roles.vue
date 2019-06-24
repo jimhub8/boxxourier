@@ -59,9 +59,9 @@
 </template>
 
 <script>
-let AddRole = require('./AddRole.vue')
-// // let ShowRole = require('./ShowRole.vue')
-let EditRole = require('./EditRole.vue')
+import AddRole from './AddRole.vue'
+// // import ShowRole from './ShowRole.vue'
+import EditRole from './EditRole.vue'
 export default {
     props: ['user', 'role'],
     components: {
