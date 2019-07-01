@@ -43,6 +43,19 @@ class StatusController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
+    public function show($id)
+    {
+        // return $request->all();
+        return Status::find($id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Status  $status
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Status $status)
     {
         // return $request->all();

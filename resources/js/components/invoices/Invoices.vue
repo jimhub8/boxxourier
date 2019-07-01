@@ -1,6 +1,6 @@
 <template>
     <div>
-        <myPrintPdf></myPrintPdf>
+        <myPrintPdf :user="user"></myPrintPdf>
     </div>
 </template>
 

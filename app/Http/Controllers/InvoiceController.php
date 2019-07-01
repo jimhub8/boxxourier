@@ -10,18 +10,19 @@ use Illuminate\Support\Facades\Mail;
 use App\Shipment;
 use Illuminate\Support\Facades\Auth;
 
-class InvoiceController extends Controller {
-	public function index()
+class InvoiceController extends Controller
+{
+    public function index()
     {
-		$shipment = Shipment::with(['products'])->where('id', 5)->get();
-		// $shipment->transform(function($ship) {
+        $shipment = Shipment::with(['products'])->where('id', 5)->get();
+        // $shipment->transform(function($ship) {
 
-		// });
-		$data = array(
-			'shipment' => $shipment,
-			// 'user' => $user,
-			// 'pdf' => base64_decode($pdf->output()),
-		);
+        // });
+        $data = array(
+            'shipment' => $shipment,
+            // 'user' => $user,
+            // 'pdf' => base64_decode($pdf->output()),
+        );
         return view('emails.verifyEmailFirst', compact('shipment'));
     }
     public function invoice(Request $request, $id)
@@ -29,17 +30,17 @@ class InvoiceController extends Controller {
         // return $request->all();
         $type = $request->type;
         $shipment = Shipment::with(['products'])->where('id', $id)->get();
-		// $user = [];
-		$user = Auth::user();
+        // $user = [];
+        $user = Auth::user();
         // dd($cart);
         // return view('admin.invoice', compact('shipment', 'cart'));
         // dd($cart);
         // dd(base64_decode($pdf->output()));
-		$data = array(
-			'shipment' => $shipment,
-			'user' => $user,
-			// 'pdf' => base64_decode($pdf->output()),
-		);
+        $data = array(
+            'shipment' => $shipment,
+            'user' => $user,
+            // 'pdf' => base64_decode($pdf->output()),
+        );
 
         // dd($data);
         // Mail::to('jimkiarie8@gmail.com')->queue(new InvoiceMail($data, $shipment));
@@ -50,8 +51,8 @@ class InvoiceController extends Controller {
 
         if ($type == 'download') {
             return $pdf->download('invoice.pdf');
-		}
-		// return 'success you are a geneus';
+        }
+        // return 'success you are a geneus';
         // return view('emails.invoice', compact('data'));
 
     }
@@ -64,10 +65,14 @@ class InvoiceController extends Controller {
     public function filterInvoice(Request $request)
     {
         // return $request->all();
-		$date_array = array(
-			'start_date' => $request->start_date,
-			'end_date' => $request->end_date,
-		);
-        return Shipment::whereBetween('created_at', $date_array)->take('20')->get();
+        $date_array = array(
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        );
+        if ($request->client) {
+            return Shipment::where('client_id', $request->client)->whereBetween('created_at', $date_array)->take('20')->get();
+        } else {
+            return Shipment::whereBetween('created_at', $date_array)->take('20')->get();
+        }
     }
 }

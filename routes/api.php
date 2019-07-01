@@ -34,7 +34,7 @@ Route::group([
 });
 
 Route::group([
-    // 'middleware' => 'auth:api',
+    'middleware' => 'auth:api',
 ], function () {
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
@@ -52,6 +52,7 @@ Route::group([
     Route::post('addShipments', 'api\ShipmentController@addShipments')->name('addShipments');
 
     Route::post('glSearch', 'api\ShipmentController@glSearch')->name('glSearch');
+    Route::post('apiSearch/{search}', 'api\ShipmentController@apiSearch')->name('apiSearch');
     Route::get('status/{search}', 'api\ShipmentController@status')->name('status');
 
     Route::post('updateStatus/{id}', 'ShipmentController@updateStatus')->name('updateStatus');

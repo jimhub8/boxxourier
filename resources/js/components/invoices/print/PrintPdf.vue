@@ -4,7 +4,20 @@
         <div class="col-md-6">
             <div class="card card-body">
                 <div class="form-group">
-                    <v-layout row>
+                    <v-layout row wrap>
+                        <!-- <v-flex sm10 offset-sm1 v-for="role in user.roles" :key="role.id" v-if="role.name === 'Admin'">
+                            <v-select :items="AllClients" v-model="form.client" hint="Client" label="Filter By Client" single-line item-text="name" item-value="id" return-object persistent-hint></v-select>
+                        </v-flex> -->
+                        <v-flex sm10 offset-sm1>
+                            <div class="form-group col-md-12">
+                                <option value=""></option>
+                                <label class="col-form-label text-md-right" for="">Clients</label>
+                                <select class="custom-select custom-select-md col-md-12" v-model="form.client">
+                                    <option value=""></option>
+                                    <option v-for="client in AllClients" :key="client.id" :value="client.id">{{ client.name }}</option>
+                                </select>
+                            </div>
+                        </v-flex>
                         <v-flex xs12 sm5 offset-sm1>
                             <v-text-field v-model="form.start_date" :type="'date'" color="blue darken-2" label="Start Date" required></v-text-field>
                         </v-flex>
@@ -25,6 +38,7 @@ import jspdf from "jspdf";
 import VueBarcode from "vue-barcode";
 
 export default {
+    props: ['user'],
     name: "print",
     components: {
         barcode: VueBarcode
@@ -32,11 +46,16 @@ export default {
     data() {
         return {
             name: "",
+            AllClients: [],
             invoices: [],
             form: {},
             errors: [],
             loading: false
         };
+    },
+
+    mounted() {
+        this.getCustomer()
     },
     methods: {
         filterInvoice() {
@@ -52,6 +71,20 @@ export default {
                     this.loading = false;
                     this.errors = error.response.data.errors;
                 });
+        },
+        getCustomer() {
+            this.loading = true
+            axios.get('/getCustomer')
+                .then((response) => {
+                    this.loader = false
+                    this.loading = false
+                    this.AllClients = response.data
+                })
+                .catch((error) => {
+                    this.loader = false
+                    this.loading = false
+                    this.errors = error.response.data.errors
+                })
         },
         download() {
             let pdfName = "Boxleo";
@@ -108,9 +141,16 @@ export default {
 
                 doc.addPage();
             }
-            doc.save(pdfName + ".pdf");
+            if (this.invoices.length > 0) {
+                doc.save(pdfName + ".pdf");
+            } else {
+                eventBus.$emit('errorEvent', 'No data found')
+                return
+            }
         }
     },
-    mounted() {}
+    mounted() {
+        this.getCustomer()
+    }
 };
 </script>
