@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 // use App\Http\Resources\ShipmentResource;
 // use App\Http\Resources\UserResource;
-// use App\Notifications\ShipmentNoty;
+use App\Notifications\ShipmentNoty;
 // use App\Pincode;
 // use App\Product;
 // use App\Shipment;
 // use App\User;
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Auth;
-// use Notification;
+use Notification;
 // use App\ShipmentStatus;
 
 class ShipmentController extends Controller
