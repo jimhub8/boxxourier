@@ -841,11 +841,13 @@ class ShipmentController extends Controller
             // return $shipment->driver;
             if (!empty($shipment->branch_id)) {
                 $branch = Branch::find($shipment->branch_id);
-                $shipment->branch_id = $branch->branch_name;
+                // $shipment->branch_id = $branch->branch_name;
+                $shipment->branch_id = ($branch) ? $branch->branch_name : '' ;
             }
             if (!empty($shipment->driver)) {
                 $driver = User::find($shipment->driver);
-                $shipment->driver = $driver->name;
+                $shipment->driver = ($driver) ? $driver->name : '' ;
+                // $shipment->driver = $driver->name;
             }
             // } else {
             // return 'not empty';

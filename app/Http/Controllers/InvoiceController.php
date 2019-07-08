@@ -64,15 +64,39 @@ class InvoiceController extends Controller
 
     public function filterInvoice(Request $request)
     {
+        $this->Validate($request, [
+            'client' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
         // return $request->all();
         $date_array = array(
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         );
-        if ($request->client) {
-            return Shipment::where('client_id', $request->client)->whereBetween('created_at', $date_array)->take('20')->get();
+        if (Auth::user()->hasRole('Client')) {
+            if ($request->client) {
+                $shipments = Shipment::where('client_id', Auth::id())->whereBetween('created_at', $date_array)->get();
+                $shipments->transform(function ($shipment) {
+                    // $shipment->client = Auth::user();
+                    return $shipment;
+                });
+                return array('shipment' => $shipments, 'client' => Auth::user());
+                // return $shipments;
+            }
         } else {
-            return Shipment::whereBetween('created_at', $date_array)->take('20')->get();
+            // if ($request->client) {
+            $shipments = Shipment::where('client_id', $request->client)->whereBetween('created_at', $date_array)->get();
+            $shipments->transform(function ($shipment) use ($request) {
+                $shipment->client = User::find($request->client);
+                return $shipment;
+            });
+                return array('shipment' => $shipments, 'client' => Auth::user());
+                return $shipments;
+            // } else {
+            //     $shipments = Shipment::whereBetween('created_at', $date_array)->take('20')->get();
+            //     return $shipments;
+            // }
         }
     }
 }

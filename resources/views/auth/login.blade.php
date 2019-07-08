@@ -13,7 +13,7 @@
                         src="{{ asset('storage/logo-white.png') }}"
                         gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
                     ></v-img> --}}
-                    <img src="{{ asset('/storage/Boxleo logo_Approved-01.jpg') }}" alt="SpeedBall"  style="width: 150px; margin-top: -150px;
+                    <img src="{{ asset('/storage/Boxleo logo_Approved-01.jpg') }}" alt="Boxleo"  style="width: 150px; margin-top: -150px;
                     margin-left: 150px;">
                     </v-flex>
                     <v-card class="elevation-12">

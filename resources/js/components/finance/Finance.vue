@@ -144,7 +144,7 @@
 <script>
 import VueBarcode from "vue-barcode";
 import mySCharges from "../shipments/Charge";
-import myInvoice from '../invoices/invoice'
+import myInvoice from '../invoice/Invoice'
 export default {
   props: ["user"],
   components: {

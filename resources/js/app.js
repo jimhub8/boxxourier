@@ -26,6 +26,12 @@ import JsonExcel from 'vue-json-excel'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { abilitiesPlugin } from '@casl/vue'
 import VueChatScroll from 'vue-chat-scroll'
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en'
+
+Vue.use(ElementUI, { locale })
 // Vue.use(Vuetify, {
 //     iconfont: 'mdi'
 //   })
@@ -62,6 +68,7 @@ Vue.use(VueGoogleMaps, {
     },
 })
 // Vue.use(VueResource);
+Vue.use(ElementUI);
 
 Vue.use(Print);
 Vue.use(Vuetify)
@@ -102,7 +109,7 @@ import myProfile from './components/account/profile/Profile';
 import myCompany from './components/company/Company.vue';
 import myCustomer from './components/customers/Customer.vue';
 import mysubsicriber from './components/emails/Subscribe.vue';
-import myInvoice from './components/invoices/Invoices';
+// import myInvoice from './components/invoices/Invoices';
 // import myReceipt from './components/receipt/Receipt.vue';
 import myReports from './components/reports/Reports.vue';
 import mybranchShip from './components/branches/BranchShipments.vue';
@@ -131,6 +138,7 @@ import myFinClient from './components/finance/Clients.vue';
 import myLogs from './components/splogs/Log.vue';
 import mySc from './components/splogs/Schedule.vue';
 import Api from './components/api/Api.vue';
+import myInvoice from './components/invoice/Getinvoice'
 
 
 const routes = [
@@ -144,7 +152,7 @@ const routes = [
     { path: '/companies', component: myCompany },
     { path: '/subscribers', component: mysubsicriber },
     { path: '/customers', component: myCustomer },
-    { path: '/invoices', component: myInvoice },
+    { path: '/invoices', component: myInvoice, name: 'invoices' },
     // { path: '/receipts', component: myReceipt },
     { path: '/reports', component: myReports },
     { path: '/roles', component: myRoles },
@@ -192,7 +200,7 @@ const app = new Vue({
         myReports, mybranchShip, myRoles, myscheduled, myTasks, myUploadFile, myCharges,
         myTown, myWaybill, myStatus, myStatuses, myCountry, myRinder, myCustDash, myDrivDash,
         myunauth, myDash, myFilter, myChatty, myFinance, myFinClient, myDStatus, myLogs, mySc,
-        passportAuthorizedclients, passportClients, passportPersonalaccesstokens, myInvoice, 
+        passportAuthorizedclients, passportClients, passportPersonalaccesstokens, myInvoice,
         Api
         // myContainer
     },
