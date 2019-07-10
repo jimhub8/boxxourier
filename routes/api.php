@@ -53,7 +53,7 @@ Route::group([
 
     Route::post('glSearch', 'api\ShipmentController@glSearch')->name('glSearch');
     Route::post('apiSearch/{search}', 'api\ShipmentController@apiSearch')->name('apiSearch');
-    Route::get('status/{search}', 'api\ShipmentController@status')->name('status');
+    // Route::get('status/{search}', 'api\ShipmentController@status')->name('status');
 
     Route::post('updateStatus/{id}', 'ShipmentController@updateStatus')->name('updateStatus');
     Route::post('barcodeUpdate/{bar_code}', 'ShipmentController@barcodeUpdate')->name('barcodeUpdate');

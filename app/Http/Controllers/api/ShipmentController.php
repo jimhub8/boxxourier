@@ -389,7 +389,7 @@ class ShipmentController extends Controller
         $user = auth('api')->user();
         // return response()->json(['data' => $user, 'status' => '200'], 200);
         return $shipments = Shipment::where('bar_code', 'LIKE', "%{$search}%")
-            ->where('client_id', $user->id)
+            // ->where('client_id', $user->id)
             ->orwhere('client_phone', 'LIKE', "%{$search}%")
             ->orwhere('client_email', 'LIKE', "%{$search}%")
             ->orwhere('client_name', 'LIKE', "%{$search}%")->paginate(500);
@@ -397,26 +397,26 @@ class ShipmentController extends Controller
         // return response()->json(['data' => $shipments, 'status' => '200'], 200);
     }
 
-    public function status($id)
-    {
+    // public function status($id)
+    // {
 
-        // return $request->all();
-        // $search = $request->search;
-        $shipments = ShipmentStatus::where('shipment_id', $id)->paginate(500);
-        // return ShipmentResource::collection($shipments);
-        // $colors = array(
-        //     'name' => 'cyan',
-        //     'name' => 'green',
-        //     'name' => 'pink',
-        //     'name' => 'pink',
-        //     'name' => 'amber',
-        //     'name' => 'orange',
-        // );
-        $shipments->transform(function ($shipment) {
-            $random_color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            $shipment->color = $random_color;
-            return $shipment;
-        });
-        return response()->json($shipments);
-    }
+    //     // return $id;
+    //     // $search = $request->search;
+    //     $shipments = ShipmentStatus::where('shipment_id', $id)->paginate(500);
+    //     // return ShipmentResource::collection($shipments);
+    //     // $colors = array(
+    //     //     'name' => 'cyan',
+    //     //     'name' => 'green',
+    //     //     'name' => 'pink',
+    //     //     'name' => 'pink',
+    //     //     'name' => 'amber',
+    //     //     'name' => 'orange',
+    //     // );
+    //     $shipments->transform(function ($shipment) {
+    //         $random_color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+    //         $shipment->color = $random_color;
+    //         return $shipment;
+    //     });
+    //     return response()->json($shipments);
+    // }
 }

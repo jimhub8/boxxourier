@@ -7,6 +7,7 @@ use App\Shipment;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\ShipmentStatus;
 
 class StatusController extends Controller
 {
@@ -46,7 +47,13 @@ class StatusController extends Controller
     public function show($id)
     {
         // return $request->all();
-        return Status::find($id);
+        $shipments = ShipmentStatus::where('shipment_id', $id)->get();
+        $shipments->transform(function ($shipment) {
+            $random_color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+            $shipment->color = $random_color;
+            return $shipment;
+        });
+        return response()->json($shipments);
     }
 
     /**

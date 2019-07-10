@@ -18,35 +18,27 @@
                         <!-- <div class="ribbon">
                             <div class="ribbon-inner ribbon-draft">Draft</div>
                         </div> -->
-                        <table cellpadding="0" cellspacing="0" class="table table-hover" v-for="item in invoice_data.client" :key="item.id">
+                        <table cellpadding="0" cellspacing="0" class="table table-hover">
                             <tr class="top">
                                 <td colspan="4">
                                     <table>
                                         <tr>
-                                            <td class="title">
-                                                <img :src="image" style="width:100%; max-width:200px;">
+                                            <td>
+                                                <img :src="image" style="width:100%; max-width:150px;">  <br>
+                                                Sender details.<br> Boxleo Courier & Fulfillment Services<br>
+
                                             </td>
                                             <td>
-                                                Order Date : <br> {{ invoice_data.shipment.created_at }}<br> Shipment Date : {{ invoice_data.shipment.derivery_date }}
+                                                Date :{{ today.getFullYear() }}<br>
+                                                Client Name : {{ invoice_data.client['name'] }}
                                                 <br>
-                                                Status : {{ invoice_data.shipment.status }}
+                                                Client Email : {{ invoice_data.client['email'] }}
+                                                <br>
+                                                Client Address : {{ invoice_data.client['address'] }}
                                             </td>
                                         </tr>
                                     </table>
-                                </td>
-                            </tr>
-                            <tr class="information">
-                                <td colspan="4">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                Sender details.<br> {{ invoice_data.shipment.sender_address }}<br> {{ invoice_data.shipment.sender_email }}<br> {{ invoice_data.shipment.sender_honep }}
-                                            </td>
-                                            <td>
-                                                Acme Corp.<br> John Doe<br> john@example.com
-                                            </td>
-                                        </tr>
-                                    </table>
+
                                 </td>
                             </tr>
                         </table>
@@ -68,11 +60,9 @@
                                     </td>
                                     <td style="text-align: left;">{{ item.cod_amount }}</td>
                                     <td style="text-align: left;">
-                                        <!-- <el-input placeholder="Qty" :disabled="true" type="number" v-model="item.price"></el-input> -->
                                         {{ item.price }}
                                     </td>
                                     <td style="text-align: left;">{{ item.cod_amount }}</td>
-                                    <!-- <td style="text-align: left;">{{ item.cod_amount * item.amount_ordered | currency }}</td> -->
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -80,13 +70,13 @@
                                 <td></td>
                                 <td></td>
                                 <td><b>Total</b></td>
-                                <td><b>{{ invoice_total }}</b></td>
+                                <!-- <td><b>{{ invoice_total }}</b></td> -->
                             </tfoot>
                         </table>
                         <v-divider></v-divider>
                         <h5>Notes</h5>
                         <br>
-                        <small>{{ invoice_data.shipment.instructions }}</small>
+                        <!-- <small>{{ invoice_data.shipment.instructions }}</small> -->
                     </div>
                 </div>
             </v-card-text>
@@ -103,23 +93,8 @@ export default {
     // props: ['image'],
     data() {
         return {
+            today: new Date(),
             dialog: false,
-            items: [{
-                    description: "Website design",
-                    quantity: 1,
-                    price: 300
-                },
-                {
-                    description: "Website design",
-                    quantity: 1,
-                    price: 75
-                },
-                {
-                    description: "Website design",
-                    quantity: 1,
-                    price: 10
-                }
-            ],
             image: '',
             invoice_data: [],
             loading: false,
@@ -127,12 +102,6 @@ export default {
         }
     },
     computed: {
-        total() {
-            return this.items.reduce(
-                (acc, item) => acc + item.price * item.quantity,
-                0
-            );
-        },
         invoice_total() {
             var total = 0
             if (this.invoice_data.shipment.length > 0) {
@@ -150,13 +119,6 @@ export default {
             setTimeout(() => {
                 this.loading = false
             }, 1000);
-        },
-        addRow() {
-            this.items.push({
-                description: "",
-                quantity: 1,
-                price: 0
-            });
         },
         loadPage() {
             this.loading = true
