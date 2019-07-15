@@ -1,7 +1,7 @@
 /*! =========================================================
  *
  Material Bootstrap Wizard - V1.0.1
- 
+
 *
 * =========================================================
 *
@@ -30,9 +30,9 @@
  *
  *               Buddha Bless:  "No Bugs"
  *
- * ========================================================= */                  
+ * ========================================================= */
  body{
-    font-family: 'Source Sans'; 
+    font-family: 'Source Sans';
 }
 
 
@@ -113,9 +113,9 @@
     background: #dff0d8 !important;
 }
 
-.theme--light .navigation-drawer 
-.list__tile:not(.list__tile--active), 
-.application .theme--light.navigation-drawer 
+.theme--light .navigation-drawer
+.list__tile:not(.list__tile--active),
+.application .theme--light.navigation-drawer
 .list__tile:not(.list__tile--active) {
     text-decoration: none !important;
 }

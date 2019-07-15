@@ -32,6 +32,6 @@ $factory->define(App\Shipment::class, function (Faker $faker) {
         'derivery_status' => 'warehouse',
         'status' => 'warehouse',
         'country_id' => $faker->numberBetween($min = 1, $max = 3),
-        'client_id' => $faker->numberBetween($min = 1, $max = 10),
+        'client_id' => $faker->numberBetween($min = 1, $max = 3),
     ];
 });
