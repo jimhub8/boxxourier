@@ -76,7 +76,7 @@ class InvoiceController extends Controller
         );
         if (Auth::user()->hasRole('Client')) {
             if ($request->client) {
-                $shipments = Shipment::where('client_id', Auth::id())->whereBetween('created_at', $date_array)->get();
+                $shipments = Shipment::whereBetween('created_at', $date_array)->get();
                 // $shipments->transform(function ($shipment) {
                 //     // $shipment->client = Auth::user();
                 //     return $shipment;
@@ -86,7 +86,7 @@ class InvoiceController extends Controller
             }
         } else {
             // if ($request->client) {
-            $shipments = Shipment::where('client_id', $request->client)->whereBetween('created_at', $date_array)->get();
+            $shipments = Shipment::whereBetween('created_at', $date_array)->get();
             // $shipments->transform(function ($shipment) use ($request) {
             //     $shipment->client = User::find($request->client);
             //     return $shipment;

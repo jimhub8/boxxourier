@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Branch;
 use App\Http\Resources\ShipmentResource;
+use App\models\AutoGenerate;
 use App\Notifications\ShipmentNoty;
 use App\Product;
 use App\ScheduleLogs;
@@ -249,23 +250,26 @@ class ShipmentController extends Controller
         $shipment->derivery_date = $request->form['derivery_date'];
         $shipment->derivery_time = $request->form['derivery_time'];
         if ($request->form['bar_code'] == '') {
-            $last_id = $this->getLastId() + 1;
-            if ($last_id <= 9) {
-                $bar_code = 'boxleo_00000' . $last_id;
-            } elseif ($last_id <= 99) {
-                $bar_code = 'boxleo_0000' . $last_id;
-            } elseif ($last_id <= 999) {
-                $bar_code = 'boxleo_000' . $last_id;
-            } elseif ($last_id <= 9999) {
-                $bar_code = 'boxleo_00' . $last_id;
-            } elseif ($last_id <= 99999) {
-                $bar_code = 'boxleo_0' . $last_id;
-            } else {
-                $bar_code = 'boxleo_' . $last_id;
-            }
-            // dd($bar_code);
-            $shipment->bar_code = $bar_code;
-            $shipment->airway_bill_no = $bar_code;
+            // $last_id = $this->getLastId() + 1;
+            // if ($last_id <= 9) {
+            //     $bar_code = 'boxleo_00000' . $last_id;
+            // } elseif ($last_id <= 99) {
+            //     $bar_code = 'boxleo_0000' . $last_id;
+            // } elseif ($last_id <= 999) {
+            //     $bar_code = 'boxleo_000' . $last_id;
+            // } elseif ($last_id <= 9999) {
+            //     $bar_code = 'boxleo_00' . $last_id;
+            // } elseif ($last_id <= 99999) {
+            //     $bar_code = 'boxleo_0' . $last_id;
+            // } else {
+            //     $bar_code = 'boxleo_' . $last_id;
+            // }
+            // // dd($bar_code);
+            // $shipment->bar_code = $bar_code;
+            // $shipment->airway_bill_no = $bar_code;
+            $bar_code = new AutoGenerate;
+            $shipment->bar_code = $bar_code->airwaybill_no();
+            $shipment->airway_bill_no = $bar_code->airwaybill_no();
         } else {
             $shipment->bar_code = $request->form['bar_code'];
             $shipment->airway_bill_no = $request->form['bar_code'];

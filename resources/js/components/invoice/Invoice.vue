@@ -48,7 +48,7 @@
                                     <th>#</th>
                                     <th scope="col">Item & Description</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Cod</th>
+                                    <!-- <th scope="col">Cod</th> -->
                                     <th scope="col">Amount</th>
                                 </tr>
                             </thead>
@@ -58,10 +58,7 @@
                                     <td style="text-align: left;">{{ item.airway_bill_no }} <br>
                                         <small>{{ item.amount_ordered }}</small>
                                     </td>
-                                    <td style="text-align: left;">{{ item.cod_amount }}</td>
-                                    <td style="text-align: left;">
-                                        {{ item.price }}
-                                    </td>
+                                    <td style="text-align: left;">{{ item.amount_ordered }}</td>
                                     <td style="text-align: left;">{{ item.cod_amount }}</td>
                                 </tr>
                             </tbody>
@@ -69,12 +66,12 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><b>Total</b></td>
+                                <!-- <td><b>Total</b></td> -->
                                 <!-- <td><b>{{ invoice_total }}</b></td> -->
                             </tfoot>
                         </table>
                         <v-divider></v-divider>
-                        <h5>Notes</h5>
+                        <!-- <h5>Notes</h5> -->
                         <br>
                         <!-- <small>{{ invoice_data.shipment.instructions }}</small> -->
                     </div>

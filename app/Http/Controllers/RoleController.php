@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller {
-	
+
 	public function getUsersRole() {
 		$user_arr = json_decode(json_encode(User::where('branch_id', Auth::user()->branch_id)->get()), true);
 		return $user_arr;
@@ -37,7 +37,7 @@ class RoleController extends Controller {
 
         // $role = Role::create(['name' => 'super-admin']);
 		// $role->givePermissionTo(Permission::all());
-		
+
 		return $role;
 	}
 
@@ -61,12 +61,12 @@ class RoleController extends Controller {
 		// return $role->id;
 		Role::find($role->id)->delete();
 	}
-	
+
 	public function getRoles()
 	{
 		return Role::all();
 	}
-	
+
 	public function getRolesPerm(Request $request)
 	{
 		// return $request->all();
@@ -91,29 +91,29 @@ class RoleController extends Controller {
 
 
 
-		
+
 		$fromDate = Carbon::today();
 		$prev_month = $today->subMonth();
 
 		$toDate = '2018-08-17';
 		$sortBy = 'id';
-	
+
 		// Report title
 		$title = 'Registered User Report';
-	
+
 		// For displaying filters description on header
 		$meta = [
 			'Report From' => $prev_month . ' To ' . $fromDate,
 			'Sort By' => $sortBy
 		];
-		
+
 
 		$users = User::with('roles')->get();
 		$userArr = [];
 		foreach ($users as $user) {
 			foreach ($user->roles as $role) {
 				if ($role->name == 'Customer') {
-					$userArr[] = $role->pivot->user_id;		
+					$userArr[] = $role->pivot->user_id;
 				}
 			}
 		}
@@ -124,7 +124,7 @@ class RoleController extends Controller {
 
 		foreach ($cust_emails as $mails) {
 		$email = $mails['email'];
-			
+
 		// Do some querying..
 		return $queryBuilder = Shipment::whereBetween('created_at', [$prev_month, $fromDate])
 							->where('client_id', $mails['id'])
@@ -141,7 +141,7 @@ class RoleController extends Controller {
 				'amount ordered',
 				'derivery date',
 			];
-			
+
 			$pdf = PdfReport::of($title, $meta, $queryBuilder, $columns)
 							->editColumn('created at', [
 								'displayAs' => function($result) {
@@ -154,7 +154,7 @@ class RoleController extends Controller {
 							->limit(10)
 							->stream(); // or download('filename here..') to download pdf
 			Mail::send(new ReportMail($user, $email, $pdf));
-		}	
+		}
 	}
 
 }
