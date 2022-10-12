@@ -31,7 +31,7 @@
         "@casl/vue": "^0.4.3",
         "chart.js": "^2.7.2",
         "element-ui": "^2.10.1",
-        "jspdf": "^1.5.3",
+        "jspdf": "^2.5.1",
         "laravel-echo": "^1.4.0",
         "pusher-js": "^4.3.1",
         "v-toaster": "^1.0.3",
